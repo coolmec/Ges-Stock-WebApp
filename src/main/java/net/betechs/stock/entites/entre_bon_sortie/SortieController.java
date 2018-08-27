@@ -1,4 +1,4 @@
-package net.betechs.mns.stock.entites.entre_bon_sortie;
+package net.betechs.stock.entites.entre_bon_sortie;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +32,7 @@ import org.primefaces.model.UploadedFile;
 public class SortieController implements Serializable {
 
     @EJB
-    private net.betechs.mns.stock.entites.entre_bon_sortie.SortieFacade ejbFacade;
+    private net.betechs.stock.entites.entre_bon_sortie.SortieFacade ejbFacade;
     @EJB
     private ArticleFacade ejbArticleFacade;
     @EJB
@@ -134,7 +134,7 @@ public class SortieController implements Serializable {
                         lines.add(line);
                     }
                 } catch (IOException e) {
-                    net.betechs.entites.dep_fam_poste_liv.util.JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("ImportError"));
+                    net.betechs.stock.entites.dep_fam_poste_liv.util.JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("ImportError"));
                 }
 
                 // Parcours de la liste de lignes de sorties récupérées, récupération et insertion des champs dans une nouvellle sortie, et création de la sortie en BDD

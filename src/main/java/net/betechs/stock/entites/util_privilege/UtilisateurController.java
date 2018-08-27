@@ -1,4 +1,4 @@
-package net.betechs.mns.stock.entites.util_privilege;
+package net.betechs.stock.entites.util_privilege;
 
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
@@ -24,7 +24,7 @@ import net.betechs.stock.entites.util_privilege.util.JsfUtil.PersistAction;
 public class UtilisateurController implements Serializable {
     
     @EJB
-    private net.betechs.mns.stock.entites.util_privilege.UtilisateurFacade ejbFacade;
+    private net.betechs.stock.entites.util_privilege.UtilisateurFacade ejbFacade;
     private List<Utilisateur> items = null, filteredItems;
     private Utilisateur selected, tocreate;
     

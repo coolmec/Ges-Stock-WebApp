@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.betechs.mns.stock.entites.entre_bon_sortie;
+package net.betechs.stock.entites.entre_bon_sortie;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

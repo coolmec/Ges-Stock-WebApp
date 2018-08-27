@@ -1,4 +1,4 @@
-package net.betechs.entites.dep_fam_poste_liv.util;
+package net.betechs.stock.entites.dep_fam_poste_liv.util;
 
 import javax.faces.model.DataModel;
 

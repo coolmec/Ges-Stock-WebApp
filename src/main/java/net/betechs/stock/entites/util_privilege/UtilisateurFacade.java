@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.betechs.mns.stock.entites.entre_bon_sortie;
+package net.betechs.stock.entites.util_privilege;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  * @author JAFFAR
  */
 @Stateless
-public class BonsortieFacade extends AbstractFacade<Bonsortie> {
+public class UtilisateurFacade extends AbstractFacade<Utilisateur> {
 
     @PersistenceContext(unitName = "us.pastec_MNS_STOCK_war_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -24,8 +24,8 @@ public class BonsortieFacade extends AbstractFacade<Bonsortie> {
         return em;
     }
 
-    public BonsortieFacade() {
-        super(Bonsortie.class);
+    public UtilisateurFacade() {
+        super(Utilisateur.class);
     }
     
 }

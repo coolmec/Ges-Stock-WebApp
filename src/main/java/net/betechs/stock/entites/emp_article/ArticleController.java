@@ -23,9 +23,9 @@ import javax.inject.Named;
 import net.betechs.stock.entites.dep_fam_poste_liv.FamilleController;
 import net.betechs.stock.entites.emp_article.util.JsfUtil;
 import net.betechs.stock.entites.emp_article.util.JsfUtil.PersistAction;
-import net.betechs.mns.stock.entites.entre_bon_sortie.Entree;
-import net.betechs.mns.stock.entites.entre_bon_sortie.EntreeController;
-import net.betechs.mns.stock.entites.entre_bon_sortie.SortieController;
+import net.betechs.stock.entites.entre_bon_sortie.Entree;
+import net.betechs.stock.entites.entre_bon_sortie.EntreeController;
+import net.betechs.stock.entites.entre_bon_sortie.SortieController;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 

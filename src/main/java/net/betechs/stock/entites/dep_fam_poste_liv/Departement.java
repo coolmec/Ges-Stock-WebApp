@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import net.betechs.stock.entites.emp_article.Employe;
-import net.betechs.mns.stock.entites.entre_bon_sortie.Bonsortie;
+import net.betechs.stock.entites.entre_bon_sortie.Bonsortie;
 
 /**
  *

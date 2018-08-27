@@ -1,4 +1,4 @@
-package net.betechs.mns.stock.entites.entre_bon_sortie;
+package net.betechs.stock.entites.entre_bon_sortie;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -109,7 +109,7 @@ public class BonsortieController implements Serializable {
                         lines.add(line);
                     }
                 } catch (IOException e) {
-                    net.betechs.entites.dep_fam_poste_liv.util.JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("ImportError"));
+                    net.betechs.stock.entites.dep_fam_poste_liv.util.JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("ImportError"));
                 }
 
                 // Parcours de la liste de lignes de bons de sortie récupérés, récupération et insertion des champs dans un nouveau bon, et création du bon en BDD

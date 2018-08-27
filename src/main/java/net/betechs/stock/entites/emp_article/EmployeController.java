@@ -115,7 +115,7 @@ public class EmployeController implements Serializable {
                         lines.add(line);
                     }
                 } catch (IOException e) {
-                    net.betechs.entites.dep_fam_poste_liv.util.JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("ImportError"));
+                    net.betechs.stock.entites.dep_fam_poste_liv.util.JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("ImportError"));
                 }
 
                 // Parcours de la liste de lignes d'employes récupérés, récupération et insertion des champs dans un nouvel employe, et création de l'employe en BDD

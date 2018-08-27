@@ -1,4 +1,4 @@
-package net.betechs.mns.stock.entites.entre_bon_sortie;
+package net.betechs.stock.entites.entre_bon_sortie;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.betechs.mns.stock.entites.entre_bon_sortie;
+package net.betechs.stock.entites.entre_bon_sortie;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,6 +23,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import net.betechs.stock.entites.dep_fam_poste_liv.Livraison;
 import net.betechs.stock.entites.emp_article.Article;
 
 /**
@@ -32,50 +34,57 @@ import net.betechs.stock.entites.emp_article.Article;
 @Table(catalog = "mns_stock", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Sortie.findAll", query = "SELECT s FROM Sortie s")
-    , @NamedQuery(name = "Sortie.findByIdSortie", query = "SELECT s FROM Sortie s WHERE s.idSortie = :idSortie")
-    , @NamedQuery(name = "Sortie.findByQteArticle", query = "SELECT s FROM Sortie s WHERE s.qteArticle = :qteArticle")})
-public class Sortie implements Serializable {
+    @NamedQuery(name = "Entree.findAll", query = "SELECT e FROM Entree e")
+    , @NamedQuery(name = "Entree.findByIdEntree", query = "SELECT e FROM Entree e WHERE e.idEntree = :idEntree")
+    , @NamedQuery(name = "Entree.findByQteArticle", query = "SELECT e FROM Entree e WHERE e.qteArticle = :qteArticle")
+    , @NamedQuery(name = "Entree.findByPuTtcArticle", query = "SELECT e FROM Entree e WHERE e.puTtcArticle = :puTtcArticle")})
+public class Entree implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_sortie", nullable = false)
-    private Integer idSortie;
+    @Column(name = "id_entree", nullable = false)
+    private Integer idEntree;
     @Basic(optional = false)
     @NotNull
     @Column(name = "qte_article", nullable = false)
     @Digits(integer = 3, fraction = 0, message = "Merci de saisir un chiffre entier.")
     @DecimalMin(value = "1", message = "La quantité doit être supérieure ou égale à 1.")
     private short qteArticle;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "pu_ttc_article", nullable = false, precision = 9, scale = 3)
+    private BigDecimal puTtcArticle;
     @JoinColumns({
         @JoinColumn(name = "code_article", referencedColumnName = "code_article", nullable = false)
         , @JoinColumn(name = "code_famille_article", referencedColumnName = "code_famille", nullable = false)})
     @ManyToOne(optional = false)
     private Article article;
-    @JoinColumn(name = "numero_bon_sortie", referencedColumnName = "numero_bon_sortie", nullable = false)
+    @JoinColumn(name = "numero_bl", referencedColumnName = "numero_bl", nullable = false)
     @ManyToOne(optional = false)
-    private Bonsortie numeroBonSortie;
+    private Livraison numeroBl;
 
-    public Sortie() {
+    public Entree() {
     }
 
-    public Sortie(Integer idSortie) {
-        this.idSortie = idSortie;
+    public Entree(Integer idEntree) {
+        this.idEntree = idEntree;
     }
 
-    public Sortie(Integer idSortie, short qteArticle) {
-        this.idSortie = idSortie;
+    public Entree(Integer idEntree, short qteArticle, BigDecimal puTtcArticle) {
+        this.idEntree = idEntree;
         this.qteArticle = qteArticle;
+        this.puTtcArticle = puTtcArticle;
     }
 
-    public Integer getIdSortie() {
-        return idSortie;
+    public Integer getIdEntree() {
+        return idEntree;
     }
 
-    public void setIdSortie(Integer idSortie) {
-        this.idSortie = idSortie;
+    public void setIdEntree(Integer idEntree) {
+        this.idEntree = idEntree;
     }
 
     public short getQteArticle() {
@@ -86,6 +95,14 @@ public class Sortie implements Serializable {
         this.qteArticle = qteArticle;
     }
 
+    public BigDecimal getPuTtcArticle() {
+        return puTtcArticle;
+    }
+
+    public void setPuTtcArticle(BigDecimal puTtcArticle) {
+        this.puTtcArticle = puTtcArticle;
+    }
+
     public Article getArticle() {
         return article;
     }
@@ -94,29 +111,29 @@ public class Sortie implements Serializable {
         this.article = article;
     }
 
-    public Bonsortie getNumeroBonSortie() {
-        return numeroBonSortie;
+    public Livraison getNumeroBl() {
+        return numeroBl;
     }
 
-    public void setNumeroBonSortie(Bonsortie numeroBonSortie) {
-        this.numeroBonSortie = numeroBonSortie;
+    public void setNumeroBl(Livraison numeroBl) {
+        this.numeroBl = numeroBl;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idSortie != null ? idSortie.hashCode() : 0);
+        hash += (idEntree != null ? idEntree.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Sortie)) {
+        if (!(object instanceof Entree)) {
             return false;
         }
-        Sortie other = (Sortie) object;
-        if ((this.idSortie == null && other.idSortie != null) || (this.idSortie != null && !this.idSortie.equals(other.idSortie))) {
+        Entree other = (Entree) object;
+        if ((this.idEntree == null && other.idEntree != null) || (this.idEntree != null && !this.idEntree.equals(other.idEntree))) {
             return false;
         }
         return true;
@@ -124,8 +141,8 @@ public class Sortie implements Serializable {
 
     @Override
     public String toString() {
-//        return "us.pastec.mns.stock.entites.dep_fam_poste_liv.Sortie[ idSortie=" + idSortie + " ]";
-        return "Sortie de stock n° " + idSortie + " du bon de sortie n° " + numeroBonSortie.getNumeroBonSortie();
+//        return "us.pastec.mns.stock.entites.dep_fam_poste_liv.Entree[ idEntree=" + idEntree + " ]";
+        return "Entrée de stock n° " + idEntree + " de la livraison n° " + numeroBl.getNumeroBl();
     }
 
 }

@@ -14,10 +14,10 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
-import net.betechs.entites.dep_fam_poste_liv.util.JsfUtil;
-import net.betechs.mns.stock.entites.util_privilege.Utilisateur;
-import net.betechs.mns.stock.entites.util_privilege.UtilisateurController;
-import net.betechs.mns.stock.entites.util_privilege.UtilisateurFacade;
+import net.betechs.stock.entites.dep_fam_poste_liv.util.JsfUtil;
+import net.betechs.stock.entites.util_privilege.Utilisateur;
+import net.betechs.stock.entites.util_privilege.UtilisateurController;
+import net.betechs.stock.entites.util_privilege.UtilisateurFacade;
 import org.primefaces.cache.CacheProvider;
 import org.primefaces.context.RequestContext;
 

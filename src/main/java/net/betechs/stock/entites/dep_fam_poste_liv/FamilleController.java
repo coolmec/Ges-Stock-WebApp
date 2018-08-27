@@ -13,8 +13,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
-import net.betechs.entites.dep_fam_poste_liv.util.JsfUtil;
-import net.betechs.entites.dep_fam_poste_liv.util.JsfUtil.PersistAction;
+import net.betechs.stock.entites.dep_fam_poste_liv.util.JsfUtil;
+import net.betechs.stock.entites.dep_fam_poste_liv.util.JsfUtil.PersistAction;
 
 @Named("familleController")
 @SessionScoped

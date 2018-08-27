@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.betechs.mns.stock.entites.util_privilege;
+package net.betechs.stock.entites.util_privilege;
 
 import java.util.List;
 import javax.persistence.EntityManager;

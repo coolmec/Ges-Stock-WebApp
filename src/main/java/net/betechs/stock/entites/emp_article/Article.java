@@ -28,8 +28,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import net.betechs.stock.entites.dep_fam_poste_liv.Famille;
-import net.betechs.mns.stock.entites.entre_bon_sortie.Entree;
-import net.betechs.mns.stock.entites.entre_bon_sortie.Sortie;
+import net.betechs.stock.entites.entre_bon_sortie.Entree;
+import net.betechs.stock.entites.entre_bon_sortie.Sortie;
 
 /**
  *

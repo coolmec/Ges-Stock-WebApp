@@ -27,8 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import net.betechs.stock.entites.dep_fam_poste_liv.Departement;
 import net.betechs.stock.entites.dep_fam_poste_liv.Poste;
-import net.betechs.mns.stock.entites.entre_bon_sortie.Bonsortie;
-import net.betechs.mns.stock.entites.util_privilege.Utilisateur;
+import net.betechs.stock.entites.entre_bon_sortie.Bonsortie;
+import net.betechs.stock.entites.util_privilege.Utilisateur;
 
 /**
  *

@@ -1,4 +1,4 @@
-package net.betechs.mns.stock.entites.util_privilege;
+package net.betechs.stock.entites.util_privilege;
 
 import java.io.Serializable;
 import java.util.List;
@@ -21,7 +21,7 @@ import net.betechs.stock.entites.util_privilege.util.JsfUtil.PersistAction;
 public class PrivilegeController implements Serializable {
 
     @EJB
-    private net.betechs.mns.stock.entites.util_privilege.PrivilegeFacade ejbFacade;
+    private net.betechs.stock.entites.util_privilege.PrivilegeFacade ejbFacade;
     private List<Privilege> items = null,filteredItems;
     private Privilege selected, tocreate;
 
