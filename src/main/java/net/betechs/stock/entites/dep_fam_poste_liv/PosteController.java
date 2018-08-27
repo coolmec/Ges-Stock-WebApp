@@ -1,4 +1,4 @@
-package net.betechs.mns.stock.entites.util_privilege;
+package net.betechs.stock.entites.dep_fam_poste_liv;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,37 +13,37 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
-import net.betechs.stock.entites.util_privilege.util.JsfUtil;
-import net.betechs.stock.entites.util_privilege.util.JsfUtil.PersistAction;
+import net.betechs.entites.dep_fam_poste_liv.util.JsfUtil;
+import net.betechs.entites.dep_fam_poste_liv.util.JsfUtil.PersistAction;
 
-@Named("privilegeController")
+@Named("posteController")
 @SessionScoped
-public class PrivilegeController implements Serializable {
+public class PosteController implements Serializable {
 
     @EJB
-    private net.betechs.mns.stock.entites.util_privilege.PrivilegeFacade ejbFacade;
-    private List<Privilege> items = null,filteredItems;
-    private Privilege selected, tocreate;
+    private PosteFacade ejbFacade;
+    private List<Poste> items = null,filteredItems;
+    private Poste selected, tocreate;
 
-    public PrivilegeController() {
+    public PosteController() {
     }
 
-    public Privilege getTocreate() {
+    public Poste getTocreate() {
         if (tocreate == null) {
-            tocreate = new Privilege();
+            tocreate = new Poste();
         }
         return tocreate;
     }
 
-    public void setTocreate(Privilege tocreate) {
+    public void setTocreate(Poste tocreate) {
         this.tocreate = tocreate;
     }
 
-    public Privilege getSelected() {
+    public Poste getSelected() {
         return selected;
     }
 
-    public void setSelected(Privilege selected) {
+    public void setSelected(Poste selected) {
         this.selected = selected;
     }
 
@@ -53,27 +53,27 @@ public class PrivilegeController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private PrivilegeFacade getFacade() {
+    private PosteFacade getFacade() {
         return ejbFacade;
     }
 
-    public Privilege prepareCreate() {
-        selected = new Privilege();
+    public Poste prepareCreate() {
+        selected = new Poste();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PrivilegeCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PosteCreated"));
         if (!JsfUtil.isValidationFailed()) {
-            tocreate = null;
-            selected = null;
             items = null;    // Invalidate list of items to trigger re-query.
+            selected = null;
+            tocreate = null;
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PrivilegeUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PosteUpdated"));
         selected = null;
         items = null;
     }
@@ -84,14 +84,15 @@ public class PrivilegeController implements Serializable {
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PrivilegeDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PosteDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
+
     }
 
-    public List<Privilege> getItems() {
+    public List<Poste> getItems() {
 //        if (items == null) {
 //            items = getFacade().findAll();
 //        }
@@ -104,36 +105,35 @@ public class PrivilegeController implements Serializable {
         if (selected != null || tocreate != null) {
             setEmbeddableKeys();
             try {
-                List<Privilege> famille = getFacade().findAll();
-                Boolean existNomPrivilege = false;
+                List<Poste> famille = getFacade().findAll();
+                Boolean existNomPoste = false;
                 Short code = (short) 0;
                 if (persistAction != PersistAction.DELETE & persistAction != PersistAction.CREATE) {
-                    for (Privilege famille1 : famille) {
-                        if (famille1.getLibellePrivilege().equals(selected.getLibellePrivilege())) {
-                            code = famille1.getCodePrivilege();
-                            existNomPrivilege = true;
+                    for (Poste famille1 : famille) {
+                        if (famille1.getNomPoste().equals(selected.getNomPoste())) {
+                            code = famille1.getCodePoste();
+                            existNomPoste = true;
                         }
                     }
-                    if (existNomPrivilege == true && !code.equals(selected.getCodePrivilege())) {
-                        JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("LibellePrivilegeAlreadyExist"), null);
+                    if (existNomPoste == true && !code.equals(selected.getCodePoste())) {
+                        JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("TitrePosteAlreadyExist"), null);
                     } else {
                         getFacade().edit(selected);
                         JsfUtil.addSuccessMessage(successMessage, null);
-
                     }
                 } else if (persistAction != PersistAction.CREATE) {
                     getFacade().remove(selected);
                     JsfUtil.addSuccessMessage(successMessage, null);
                 } else {
-                    for (Privilege famille1 : famille) {
-                        if (famille1.getLibellePrivilege().equals(tocreate.getLibellePrivilege())) {
-                            existNomPrivilege = true;
+                    for (Poste famille1 : famille) {
+                        if (famille1.getNomPoste().equals(tocreate.getNomPoste())) {
+                            existNomPoste = true;
                         }
                     }
-                    if (getFacade().find(tocreate.getCodePrivilege()) != null) {
-                        JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("PrivilegeAlreadyExist"), null);
-                    } else if (existNomPrivilege == true) {
-                        JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("LibellePrivilegeAlreadyExist"), null);
+                    if (getFacade().find(tocreate.getCodePoste()) != null) {
+                        JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("PosteAlreadyExist"), null);
+                    } else if (existNomPoste == true) {
+                        JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("TitrePosteAlreadyExist"), null);
                     } else {
                         getFacade().create(tocreate);
                         JsfUtil.addSuccessMessage(successMessage, null);
@@ -157,37 +157,37 @@ public class PrivilegeController implements Serializable {
         }
     }
 
-    public Privilege getPrivilege(java.lang.Short id) {
+    public Poste getPoste(java.lang.Short id) {
         return getFacade().find(id);
     }
 
-    public List<Privilege> getItemsAvailableSelectMany() {
+    public List<Poste> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Privilege> getItemsAvailableSelectOne() {
+    public List<Poste> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    public List<Privilege> getFilteredItems() {
+    public List<Poste> getFilteredItems() {
         return filteredItems;
     }
 
-    public void setFilteredItems(List<Privilege> filteredItems) {
+    public void setFilteredItems(List<Poste> filteredItems) {
         this.filteredItems = filteredItems;
     }
 
-    @FacesConverter(forClass = Privilege.class)
-    public static class PrivilegeControllerConverter implements Converter {
+    @FacesConverter(forClass = Poste.class)
+    public static class PosteControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
-
+                return null;
             }
-            PrivilegeController controller = (PrivilegeController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "privilegeController");
-            return controller.getPrivilege(getKey(value));
+            PosteController controller = (PosteController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "posteController");
+            return controller.getPoste(getKey(value));
         }
 
         java.lang.Short getKey(String value) {
@@ -205,16 +205,15 @@ public class PrivilegeController implements Serializable {
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
-
-            }
-            if (object instanceof Privilege) {
-                Privilege o = (Privilege) object;
-                return getStringKey(o.getCodePrivilege());
-            } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Privilege.class.getName()});
                 return null;
             }
-
+            if (object instanceof Poste) {
+                Poste o = (Poste) object;
+                return getStringKey(o.getCodePoste());
+            } else {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Poste.class.getName()});
+                return null;
+            }
         }
 
     }

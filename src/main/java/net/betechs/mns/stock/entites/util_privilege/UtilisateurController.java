@@ -16,8 +16,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
-import net.betechs.mns.stock.entites.util_privilege.util.JsfUtil;
-import net.betechs.mns.stock.entites.util_privilege.util.JsfUtil.PersistAction;
+import net.betechs.stock.entites.util_privilege.util.JsfUtil;
+import net.betechs.stock.entites.util_privilege.util.JsfUtil.PersistAction;
 
 @Named("utilisateurController")
 @SessionScoped

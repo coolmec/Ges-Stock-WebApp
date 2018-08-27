@@ -1,4 +1,4 @@
-package net.betechs.mns.stock.entites.util_privilege;
+package net.betechs.stock.entites.dep_fam_poste_liv;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,37 +13,37 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
-import net.betechs.stock.entites.util_privilege.util.JsfUtil;
-import net.betechs.stock.entites.util_privilege.util.JsfUtil.PersistAction;
+import net.betechs.entites.dep_fam_poste_liv.util.JsfUtil;
+import net.betechs.entites.dep_fam_poste_liv.util.JsfUtil.PersistAction;
 
-@Named("privilegeController")
+@Named("familleController")
 @SessionScoped
-public class PrivilegeController implements Serializable {
+public class FamilleController implements Serializable {
 
     @EJB
-    private net.betechs.mns.stock.entites.util_privilege.PrivilegeFacade ejbFacade;
-    private List<Privilege> items = null,filteredItems;
-    private Privilege selected, tocreate;
+    private FamilleFacade ejbFacade;
+    private List<Famille> items = null, filteredItems;
+    private Famille selected, tocreate;
 
-    public PrivilegeController() {
+    public FamilleController() {
     }
 
-    public Privilege getTocreate() {
+    public Famille getTocreate() {
         if (tocreate == null) {
-            tocreate = new Privilege();
+            tocreate = new Famille();
         }
         return tocreate;
     }
 
-    public void setTocreate(Privilege tocreate) {
+    public void setTocreate(Famille tocreate) {
         this.tocreate = tocreate;
     }
 
-    public Privilege getSelected() {
+    public Famille getSelected() {
         return selected;
     }
 
-    public void setSelected(Privilege selected) {
+    public void setSelected(Famille selected) {
         this.selected = selected;
     }
 
@@ -53,27 +53,27 @@ public class PrivilegeController implements Serializable {
     protected void initializeEmbeddableKey() {
     }
 
-    private PrivilegeFacade getFacade() {
+    private FamilleFacade getFacade() {
         return ejbFacade;
     }
 
-    public Privilege prepareCreate() {
-        selected = new Privilege();
+    public Famille prepareCreate() {
+        selected = new Famille();
         initializeEmbeddableKey();
         return selected;
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("PrivilegeCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("FamilleCreated"));
         if (!JsfUtil.isValidationFailed()) {
-            tocreate = null;
-            selected = null;
             items = null;    // Invalidate list of items to trigger re-query.
+            selected = null;
+            tocreate = null;
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("PrivilegeUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("FamilleUpdated"));
         selected = null;
         items = null;
     }
@@ -84,14 +84,15 @@ public class PrivilegeController implements Serializable {
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("PrivilegeDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("FamilleDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
         }
+
     }
 
-    public List<Privilege> getItems() {
+    public List<Famille> getItems() {
 //        if (items == null) {
 //            items = getFacade().findAll();
 //        }
@@ -104,36 +105,35 @@ public class PrivilegeController implements Serializable {
         if (selected != null || tocreate != null) {
             setEmbeddableKeys();
             try {
-                List<Privilege> famille = getFacade().findAll();
-                Boolean existNomPrivilege = false;
+                List<Famille> famille = getFacade().findAll();
+                Boolean existNomFamille = false;
                 Short code = (short) 0;
                 if (persistAction != PersistAction.DELETE & persistAction != PersistAction.CREATE) {
-                    for (Privilege famille1 : famille) {
-                        if (famille1.getLibellePrivilege().equals(selected.getLibellePrivilege())) {
-                            code = famille1.getCodePrivilege();
-                            existNomPrivilege = true;
+                    for (Famille famille1 : famille) {
+                        if (famille1.getNomFamille().equals(selected.getNomFamille())) {
+                            code = famille1.getCodeFamille();
+                            existNomFamille = true;
                         }
                     }
-                    if (existNomPrivilege == true && !code.equals(selected.getCodePrivilege())) {
-                        JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("LibellePrivilegeAlreadyExist"), null);
+                    if (existNomFamille == true && !code.equals(selected.getCodeFamille())) {
+                        JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("NomFamilleAlreadyExist"), null);
                     } else {
                         getFacade().edit(selected);
                         JsfUtil.addSuccessMessage(successMessage, null);
-
                     }
                 } else if (persistAction != PersistAction.CREATE) {
                     getFacade().remove(selected);
                     JsfUtil.addSuccessMessage(successMessage, null);
                 } else {
-                    for (Privilege famille1 : famille) {
-                        if (famille1.getLibellePrivilege().equals(tocreate.getLibellePrivilege())) {
-                            existNomPrivilege = true;
+                    for (Famille famille1 : famille) {
+                        if (famille1.getNomFamille().equals(tocreate.getNomFamille())) {
+                            existNomFamille = true;
                         }
                     }
-                    if (getFacade().find(tocreate.getCodePrivilege()) != null) {
-                        JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("PrivilegeAlreadyExist"), null);
-                    } else if (existNomPrivilege == true) {
-                        JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("LibellePrivilegeAlreadyExist"), null);
+                    if (getFacade().find(tocreate.getCodeFamille()) != null) {
+                        JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("FamilleAlreadyExist"), null);
+                    } else if (existNomFamille == true) {
+                        JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("NomFamilleAlreadyExist"), null);
                     } else {
                         getFacade().create(tocreate);
                         JsfUtil.addSuccessMessage(successMessage, null);
@@ -157,37 +157,37 @@ public class PrivilegeController implements Serializable {
         }
     }
 
-    public Privilege getPrivilege(java.lang.Short id) {
+    public Famille getFamille(java.lang.Short id) {
         return getFacade().find(id);
     }
 
-    public List<Privilege> getItemsAvailableSelectMany() {
+    public List<Famille> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
 
-    public List<Privilege> getItemsAvailableSelectOne() {
+    public List<Famille> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
 
-    public List<Privilege> getFilteredItems() {
+    public List<Famille> getFilteredItems() {
         return filteredItems;
     }
 
-    public void setFilteredItems(List<Privilege> filteredItems) {
+    public void setFilteredItems(List<Famille> filteredItems) {
         this.filteredItems = filteredItems;
     }
 
-    @FacesConverter(forClass = Privilege.class)
-    public static class PrivilegeControllerConverter implements Converter {
+    @FacesConverter(forClass = Famille.class)
+    public static class FamilleControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
-
+                return null;
             }
-            PrivilegeController controller = (PrivilegeController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "privilegeController");
-            return controller.getPrivilege(getKey(value));
+            FamilleController controller = (FamilleController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "familleController");
+            return controller.getFamille(getKey(value));
         }
 
         java.lang.Short getKey(String value) {
@@ -205,16 +205,15 @@ public class PrivilegeController implements Serializable {
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
-
-            }
-            if (object instanceof Privilege) {
-                Privilege o = (Privilege) object;
-                return getStringKey(o.getCodePrivilege());
-            } else {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Privilege.class.getName()});
                 return null;
             }
-
+            if (object instanceof Famille) {
+                Famille o = (Famille) object;
+                return getStringKey(o.getCodeFamille());
+            } else {
+                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Famille.class.getName()});
+                return null;
+            }
         }
 
     }
