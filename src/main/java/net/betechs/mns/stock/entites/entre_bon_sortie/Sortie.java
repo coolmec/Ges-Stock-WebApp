@@ -22,7 +22,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import net.betechs.mns.stock.entites.emp_article.Article;
+import net.betechs.stock.entites.emp_article.Article;
 
 /**
  *

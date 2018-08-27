@@ -27,8 +27,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import net.betechs.mns.stock.entites.dep_fam_poste_liv.Departement;
-import net.betechs.mns.stock.entites.emp_article.Employe;
+import net.betechs.stock.entites.dep_fam_poste_liv.Departement;
+import net.betechs.stock.entites.emp_article.Employe;
 
 /**
  *

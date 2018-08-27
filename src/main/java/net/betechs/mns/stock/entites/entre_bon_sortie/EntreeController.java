@@ -20,13 +20,13 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
-import net.betechs.mns.stock.entites.dep_fam_poste_liv.LivraisonFacade;
-import net.betechs.mns.stock.entites.emp_article.Article;
-import net.betechs.mns.stock.entites.emp_article.ArticleController;
-import net.betechs.mns.stock.entites.emp_article.ArticleFacade;
-import net.betechs.mns.stock.entites.emp_article.ArticlePK;
-import net.betechs.mns.stock.entites.entre_bon_sortie.util.JsfUtil;
-import net.betechs.mns.stock.entites.entre_bon_sortie.util.JsfUtil.PersistAction;
+import net.betechs.stock.entites.dep_fam_poste_liv.LivraisonFacade;
+import net.betechs.stock.entites.emp_article.Article;
+import net.betechs.stock.entites.emp_article.ArticleController;
+import net.betechs.stock.entites.emp_article.ArticleFacade;
+import net.betechs.stock.entites.emp_article.ArticlePK;
+import net.betechs.stock.entites.entre_bon_sortie.util.JsfUtil;
+import net.betechs.stock.entites.entre_bon_sortie.util.JsfUtil.PersistAction;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -159,7 +159,7 @@ public class EntreeController implements Serializable {
             }
 
         } catch (IOException | NumberFormatException iOException) {
-            net.betechs.mns.stock.entites.emp_article.util.JsfUtil.addErrorMessage(iOException, ResourceBundle.getBundle("/Bundle").getString("ImportError"));
+            net.betechs.stock.entites.emp_article.util.JsfUtil.addErrorMessage(iOException, ResourceBundle.getBundle("/Bundle").getString("ImportError"));
         }
     }
 

@@ -19,10 +19,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
-import net.betechs.mns.stock.entites.dep_fam_poste_liv.DepartementFacade;
-import net.betechs.mns.stock.entites.emp_article.EmployeFacade;
-import net.betechs.mns.stock.entites.entre_bon_sortie.util.JsfUtil;
-import net.betechs.mns.stock.entites.entre_bon_sortie.util.JsfUtil.PersistAction;
+import net.betechs.stock.entites.dep_fam_poste_liv.DepartementFacade;
+import net.betechs.stock.entites.emp_article.EmployeFacade;
+import net.betechs.stock.entites.entre_bon_sortie.util.JsfUtil;
+import net.betechs.stock.entites.entre_bon_sortie.util.JsfUtil.PersistAction;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -109,7 +109,7 @@ public class BonsortieController implements Serializable {
                         lines.add(line);
                     }
                 } catch (IOException e) {
-                    net.betechs.mns.stock.entites.dep_fam_poste_liv.util.JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("ImportError"));
+                    net.betechs.entites.dep_fam_poste_liv.util.JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("ImportError"));
                 }
 
                 // Parcours de la liste de lignes de bons de sortie récupérés, récupération et insertion des champs dans un nouveau bon, et création du bon en BDD
@@ -131,7 +131,7 @@ public class BonsortieController implements Serializable {
             }
 
         } catch (IOException | NumberFormatException iOException) {
-            net.betechs.mns.stock.entites.emp_article.util.JsfUtil.addErrorMessage(iOException, ResourceBundle.getBundle("/Bundle").getString("ImportError"));
+            net.betechs.stock.entites.emp_article.util.JsfUtil.addErrorMessage(iOException, ResourceBundle.getBundle("/Bundle").getString("ImportError"));
         }
     }
 
