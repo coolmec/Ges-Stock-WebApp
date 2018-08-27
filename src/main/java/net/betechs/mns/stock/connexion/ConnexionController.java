@@ -1,4 +1,4 @@
-package net.betechs.mns.stocks.connexion;
+package net.betechs.mns.stock.connexion;
 
 import java.io.Serializable;
 import java.util.List;

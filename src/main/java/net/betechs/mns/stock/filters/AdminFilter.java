@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-import net.betechs.mns.stocks.connexion.ConnexionController;
+import net.betechs.mns.stock.connexion.ConnexionController;
 
 /**
  *
