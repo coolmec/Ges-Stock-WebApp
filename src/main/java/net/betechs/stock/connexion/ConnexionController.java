@@ -34,6 +34,14 @@ import org.primefaces.context.RequestContext;
 @SessionScoped
 public class ConnexionController implements Serializable {
 
+    private static final String WELCOME_PAGE = "bienvenue.xhtml?faces-redirect=true src=accueil.xhtml",
+            CONNECTION_PAGE = "welcome.xhtml?faces-redirect=false",
+            DISCONECTION_REDIRECT_PAGE = "/faces/welcome.xhtml?faces-redirect=true",
+            CONNEXION_CONTROLLER = "connexionController",
+            CACHE_REGION = "testcache",
+            CACHE_KEY = "menu",
+            CONNEXION_SUCCEED_MESSAGE_KEY = "ConnexionSucceed",
+            CONNEXION_FAILED_MESSAGE_KEY = "ConnexionFailed";
     private String login = "", password = "", password2 = "", actualPassword = "";
     private Utilisateur utilisateur;
     private boolean connected, render;
@@ -65,13 +73,13 @@ public class ConnexionController implements Serializable {
         if (this.password2.equals(utilisateurController.get_SHA_512_SecurePassword(password, password.substring(2, 4)))) {
             connected = true;
             render = this.utilisateur.getCodePrivilegeUtilisateur().getCodePrivilege().equals((short) 1);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ConnexionSucceed"), null);
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString(CONNEXION_SUCCEED_MESSAGE_KEY), null);
             cacheEraser();
-            return "bienvenue.xhtml?faces-redirect=true src=accueil.xhtml";
+            return WELCOME_PAGE;
         } else {
             connected = false;
-            JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString("ConnexionFailed"), null);
-            return "Connexion.xhtml?faces-redirect=false";
+            JsfUtil.addErrorMessage(ResourceBundle.getBundle("/Bundle").getString(CONNEXION_FAILED_MESSAGE_KEY), null);
+            return CONNECTION_PAGE;
         }
     }
 
@@ -82,7 +90,7 @@ public class ConnexionController implements Serializable {
         setConnected(false);
         setUtilisateur(new Utilisateur());
         cacheEraser();
-        return "/faces/Connexion.xhtml?faces-redirect=true";
+        return DISCONECTION_REDIRECT_PAGE;
     }
 
     public void update() {
@@ -121,7 +129,7 @@ public class ConnexionController implements Serializable {
                 return null;
             }
             ConnexionController controller = (ConnexionController) context.getApplication().getELResolver().
-                    getValue(context.getELContext(), null, "connexionController");
+                    getValue(context.getELContext(), null, CONNEXION_CONTROLLER);
 
             Theme th = null;
             for (Theme t : controller.getThemes()) {
@@ -160,7 +168,7 @@ public class ConnexionController implements Serializable {
 
     private void cacheEraser() {
         CacheProvider cacheProvider = RequestContext.getCurrentInstance().getApplicationContext().getCacheProvider();
-        cacheProvider.remove("testcache", "menu");
+        cacheProvider.remove(CACHE_REGION, CACHE_KEY);
     }
 
     public Theme getTheme() {

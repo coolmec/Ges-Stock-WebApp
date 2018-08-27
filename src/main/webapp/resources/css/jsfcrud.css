@@ -19,6 +19,12 @@
                             margin-right: 7px;
                             vertical-align: middle;
 }
+.head {
+    display: block; 
+    width:1000px; 
+    margin: auto;
+    text-align: center
+}
 /* Themes */
 .ui-theme {background: url("\#{resource['images/themes.png']}") no-repeat top left;display: block;}
 .ui-theme.ui-theme-afterdark{ background-position: 0 0; width: 30px; height: 25px; } 
