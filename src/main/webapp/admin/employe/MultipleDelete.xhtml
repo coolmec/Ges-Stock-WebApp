@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmployesDeleteDlg" widgetVar="EmployesDeleteDialog" modal="true" closeOnEscape="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" header="#{bundle.DeleteEmployeTitle}" closable="true">
+            <p:ajax event="close" listener="#{employeController.setSelectedEmployes(null)}" update=":EmployeListForm:datalist"/>
+            <h:form id="EmployesDeleteForm">            
+                <p:dataTable id="displays" var="selected" value="#{employeController.selectedEmployes}" scrollable="true" resizableColumns="true" rows="5" rowsPerPageTemplate="5,10,15,20,30,40,50">
+                    
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column colspan="2" headerText="#{bundle.ListEmployeTitle_matriculeEmploye}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListEmployeTitle_nomEmploye}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListEmployeTitle_prenomEmploye}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListEmployeTitle_departementEmploye}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListEmployeTitle_posteEmploye}"/>
+                        </p:row>
+                        <p:row>
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                        </p:row>
+                    </p:columnGroup>
+                    
+                    <p:column>
+                        <p:outputLabel value="#{bundle.DeleteEmployeLabel_matriculeEmploye}" for="matriculeEmployes" />                        
+                    </p:column>
+                    <p:column>
+                        <p:inputText id="matriculeEmployes" value="#{selected.matriculeEmploye}" title="#{bundle.DeleteEmployeTitle_matriculeEmploye}" required="true" requiredMessage="#{bundle.DeleteEmployeRequiredMessage_matriculeEmploye}" disabled="true"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.DeleteEmployeLabel_nomEmploye}" for="nomEmployes" />
+                    </p:column>
+                    <p:column>    
+                        <p:inputTextarea rows="4" cols="30" id="nomEmployes" value="#{selected.nomEmploye}" title="#{bundle.DeleteEmployeTitle_nomEmploye}" required="true" requiredMessage="#{bundle.DeleteEmployeRequiredMessage_nomEmploye}" disabled="true"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.DeleteEmployeLabel_prenomEmploye}" for="prenomEmployes" />
+                    </p:column>
+                    <p:column>    
+                        <p:inputText id="prenomEmployes" value="#{selected.prenomEmploye}" title="#{bundle.DeleteEmployeTitle_prenomEmploye}" required="true" requiredMessage="#{bundle.DeleteEmployeRequiredMessage_prenomEmploye}" disabled="true"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.DeleteEmployeLabel_departementEmploye}" for="departementEmployes" />
+                    </p:column>
+                    <p:column>    
+                        <p:inputText id="departementEmployes" value="#{selected.departementEmploye}" title="#{bundle.DeleteEmployeTitle_departementEmploye}" required="true" requiredMessage="#{bundle.DeleteEmployeRequiredMessage_departementEmploye}" disabled="true"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.DeleteEmployeLabel_posteEmploye}" for="posteEmployes" />
+                    </p:column>
+                    <p:column>
+                        <p:inputText id="posteEmployes" value="#{selected.posteEmploye}" title="#{bundle.DeleteEmployeTitle_posteEmploye}" required="true" requiredMessage="#{bundle.DeleteEmployeRequiredMessage_posteEmploye}" disabled="true"/>
+                    </p:column>
+                </p:dataTable>
+                <p:commandButton actionListener="#{employeController.destroySelectedEmployes}" value="#{bundle.Delete}" oncomplete="PF('EmployesDeleteDialog').hide()" update=":growl,displays,:EmployeListForm:datalist">
+                    <p:confirm header="Confirmation" message="#{bundle.DeleteEmployesConfirmationTitle}" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:commandButton actionListener="#{employeController.cancel}" value="#{bundle.Cancel}" onclick="PF('EmployesDeleteDialog').hide()"/>
+            </h:form>        
+        </p:dialog>
+        
+    </ui:composition>
+</html>

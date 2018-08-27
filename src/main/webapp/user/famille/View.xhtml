@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FamilleViewDlg" widgetVar="FamilleViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewFamilleTitle}" closable="true">
+            <p:ajax event="close" listener="#{familleController.setSelected(null)}" update=":FamilleListForm:datalist"/>
+            <h:form id="FamilleViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{familleController.selected != null}">
+                        <h:outputText value="#{bundle.ViewFamilleLabel_codeFamille}"/>
+                        <h:outputText value="#{familleController.selected.codeFamille}" title="#{bundle.ViewFamilleTitle_codeFamille}"/>
+                        <h:outputText value="#{bundle.ViewFamilleLabel_nomFamille}"/>
+                        <h:outputText value="#{familleController.selected.nomFamille}" title="#{bundle.ViewFamilleTitle_nomFamille}"/>
+                        <h:outputText value="#{bundle.ViewFamilleLabel_descriptionFamille}"/>
+                        <h:outputText value="#{familleController.selected.descriptionFamille}" title="#{bundle.ViewFamilleTitle_descriptionFamille}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PF('FamilleViewDialog').hide()" actionListener="#{familleController.cancel}"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

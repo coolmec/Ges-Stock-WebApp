@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FamilleEditDlg" widgetVar="FamilleEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditFamilleTitle}" closable="true">
+            <p:ajax event="close" listener="#{familleController.setSelected(null)}" update=":FamilleListForm:datalist"/>
+            <h:form id="FamilleEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{familleController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditFamilleLabel_codeFamille}" for="codeFamille" />
+                        <p:inputText id="codeFamille" value="#{familleController.selected.codeFamille}" title="#{bundle.EditFamilleTitle_codeFamille}" required="true" requiredMessage="#{bundle.EditFamilleRequiredMessage_codeFamille}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.EditFamilleLabel_nomFamille}" for="nomFamille" />
+                        <p:inputText id="nomFamille" value="#{familleController.selected.nomFamille}" title="#{bundle.EditFamilleTitle_nomFamille}" required="true" requiredMessage="#{bundle.EditFamilleRequiredMessage_nomFamille}"/>
+                        <p:outputLabel value="#{bundle.EditFamilleLabel_descriptionFamille}" for="descriptionFamille" />
+                        <p:inputTextarea rows="4" cols="30" id="descriptionFamille" value="#{familleController.selected.descriptionFamille}" title="#{bundle.EditFamilleTitle_descriptionFamille}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{familleController.update}" value="#{bundle.Save}" update=":growl,display,:FamilleListForm:datalist" oncomplete="PF('FamilleEditDialog').hide()" validateClient="true"/>
+                    <p:commandButton actionListener="#{familleController.cancel}" value="#{bundle.Cancel}" onclick="PF('FamilleEditDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

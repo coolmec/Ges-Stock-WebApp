@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.MonCompte}" style="display: block; width:350px; margin: auto;text-align: center"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            
+            <ui:include src="Growl.xhtml"/>
+            <p:panel style="width: 250px; margin: auto; border-color: transparent; text-align: center">
+                <h:form id="AccountForm">
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}"   update=":AccountViewForm"   oncomplete="PF('AccountViewDialog').show()"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.PasswordChangeButton}"   update=":PasswordEditForm"   oncomplete="PF('PasswordEditDialog').show()"/>
+                </h:form>
+            </p:panel>
+            <ui:include src="ViewAccount.xhtml"/>
+            <ui:include src="EditPassword.xhtml"/>
+        </ui:define>
+    </ui:composition>
+    
+</html>

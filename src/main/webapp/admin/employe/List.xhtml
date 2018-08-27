@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListEmployeTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            
+            <ui:include src="Growl.xhtml"/>
+            
+            <h:form id="EmployeListForm">
+                
+                <p:panel header="#{bundle.ListEmployeTitle}">
+                    <p:dataTable id="datalist" value="#{employeController.items}" var="item"
+                                 selection="#{employeController.selectedEmployes}"
+                                 paginator="true"
+                                 rowKey="#{item.matriculeEmploye}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,15,20,30,40,50"
+                                 widgetVar="employesTable"
+                                 emptyMessage="#{bundle.ListEmployeEmpty}"
+                                 filteredValue="#{employeController.filteredItems}"
+                                 sortMode="multiple"
+                                 draggableColumns="true"
+                                 >
+
+                        <p:ajax event="rowSelect" listener="#{employeController.onRowUnselect}" update="viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" listener="#{employeController.onRowUnselect}" update="viewButton editButton deleteButton"/>
+                        
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="#{bundle.AllSearch}" />
+                                <p:inputText id="globalFilter" onkeyup="PF('employesTable').filter()" style="width:150px" placeholder="#{bundle.SearchKeyword}"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+                        <p:column filterBy="#{item.matriculeEmploye}" filterMatchMode="contains" sortBy="#{item.matriculeEmploye}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmployeTitle_matriculeEmploye}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.matriculeEmploye}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.nomEmploye}" filterMatchMode="contains" sortBy="#{item.nomEmploye}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmployeTitle_nomEmploye}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nomEmploye}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.prenomEmploye}" filterMatchMode="contains" sortBy="#{item.prenomEmploye}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmployeTitle_prenomEmploye}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.prenomEmploye}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.adresseEmploye}" filterMatchMode="contains" sortBy="#{item.adresseEmploye}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmployeTitle_adresseEmploye}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.adresseEmploye}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.telephone1Employe}" filterMatchMode="contains" sortBy="#{item.telephone1Employe}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmployeTitle_telephone1Employe}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.telephone1Employe}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.telephone2Employe}" filterMatchMode="contains" sortBy="#{item.telephone2Employe}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmployeTitle_telephone2Employe}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.telephone2Employe}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.commentaires}" filterMatchMode="contains" sortBy="#{item.commentaires}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmployeTitle_commentaires}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.commentaires}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.departementEmploye.nomDepartement}" filterMatchMode="contains" sortBy="#{item.departementEmploye.nomDepartement}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmployeTitle_departementEmploye}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.departementEmploye.nomDepartement}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.posteEmploye.nomPoste}" filterMatchMode="contains" sortBy="#{item.posteEmploye.nomPoste}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListEmployeTitle_posteEmploye}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.posteEmploye.nomPoste}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton"  icon="ui-icon-plus"   value="#{bundle.Create}"  update=":EmployeCreateForm"  oncomplete="PF('EmployeCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"    widgetVar="viewButton"   icon="ui-icon-search" value="#{bundle.View}"   update=":EmployesViewForm,:EmployeViewForm,viewButton"       oncomplete="PF('#{employeController.viewLink()}').show()"   />
+                            <p:commandButton id="editButton"    widgetVar="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}"   update=":EmployesEditForm,:EmployeEditForm,editButton"       oncomplete="PF('#{employeController.editLink()}').show()"   />
+                            <p:commandButton id="deleteButton"  widgetVar="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" update=":EmployesDeleteForm,:EmployeDeleteForm,deleteButton" oncomplete="PF('#{employeController.deleteLink()}').show()" 
+                                             rendered="#{connexionController.render}"/>
+                            <p:commandButton id="refreshButton"  widgetVar="refreshButton" icon="ui-icon-refresh"  value="#{bundle.Refresh}" update="EmployeListForm" action="Index.xhtml"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="SingleView.xhtml"/>
+            <ui:include src="MultipleView.xhtml"/>
+            <ui:include src="SingleEdit.xhtml"/>
+            <ui:include src="MultipleEdit.xhtml"/>
+            <ui:include src="SingleDelete.xhtml"/>
+            <ui:include src="MultipleDelete.xhtml"/>
+            
+            <h:form>                            
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                    <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                </p:confirmDialog>                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+    
+</html>

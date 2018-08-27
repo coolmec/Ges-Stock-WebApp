@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BonSortiesDeleteDlg" widgetVar="BonSortiesDeleteDialog" modal="true" closeOnEscape="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" header="#{bundle.DeleteBonsortieTitle}" closable="true">
+            <p:ajax event="close" listener="#{bonsortieController.setSelectedBonSorties(null)}" update=":BonSortieListForm:datalist"/>
+            <h:form id="BonSortiesDeleteForm">            
+                <p:dataTable id="displays" var="selected" value="#{bonsortieController.selectedBonSorties}" scrollable="true" resizableColumns="true" rows="5" rowsPerPageTemplate="5,10,15,20,30,40,50">
+                    
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column colspan="2" headerText="#{bundle.ListBonsortieTitle_numeroBonSortie}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListBonsortieTitle_dateSortie}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListLivraisonTitle_nbArticles}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListBonsortieTitle_codeDepartement}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListBonsortieTitle_matriculeEmploye}"/>
+                        </p:row>
+                        <p:row>
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                        </p:row>
+                    </p:columnGroup>
+                    
+                    <p:column>
+                        <p:outputLabel value="#{bundle.DeleteBonsortieLabel_numeroBonSortie}" for="numeroBonSorties" />                        
+                    </p:column>
+                    <p:column>
+                        <p:inputText id="numeroBonSorties" value="#{selected.numeroBonSortie}" title="#{bundle.DeleteBonsortieTitle_numeroBonSortie}" required="true" requiredMessage="#{bundle.DeleteBonsortieRequiredMessage_numeroBonSortie}" disabled="true"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.DeleteBonsortieLabel_dateSortie}" for="dateSorties" />
+                    </p:column>
+                    <p:column>    
+                        <p:calendar id="dateSorties" value="#{selected.dateSortie}" title="#{bundle.DeleteBonsortieTitle_dateSortie}" disabled="true"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.DeleteBonsortieLabel_nbArticles}" for="nbArticles" />
+                    </p:column>
+                    <p:column>
+                        <p:inputNumber id="nbArticles" value="#{selected.nbArticles}" title="#{bundle.DeleteBonsortieTitle_nbArticles}" disabled="true"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.DeleteBonsortieLabel_codeDepartement}" for="codeDepartements" />
+                    </p:column>
+                    <p:column>
+                        <p:selectOneMenu id="codeDepartements" value="#{selected.codeDepartement}" required="true" requiredMessage="#{bundle.CreateBonsortieRequiredMessage_codeDepartement}" disabled="true">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{departementController.itemsAvailableSelectOne}"
+                                           var="codeDepartementItem"
+                                           itemValue="#{codeDepartementItem}"/>
+                        </p:selectOneMenu>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.DeleteBonsortieLabel_matriculeEmploye}" for="matriculeEmployes" />
+                    </p:column>
+                    <p:column>
+                        <p:selectOneMenu id="matriculeEmployes" value="#{selected.matriculeEmploye}" required="true" requiredMessage="#{bundle.CreateBonsortieRequiredMessage_matriculeEmploye}" disabled="true">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{employeController.itemsAvailableSelectOne}"
+                                           var="matriculeEmployeItem"
+                                           itemValue="#{matriculeEmployeItem}"/>
+                        </p:selectOneMenu>
+                    </p:column>
+                </p:dataTable>
+                <p:commandButton actionListener="#{bonsortieController.destroySelectedBonSorties}" value="#{bundle.Delete}" oncomplete="PF('BonSortiesDeleteDialog').hide()" update=":growl,displays,:BonSortieListForm:datalist">
+                    <p:confirm header="Confirmation" message="#{bundle.DeleteBonsortiesConfirmationTitle}" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:commandButton actionListener="#{bonsortieController.cancel}" value="#{bundle.Cancel}" onclick="PF('BonSortiesDeleteDialog').hide()"/>
+            </h:form>        
+        </p:dialog>
+        
+    </ui:composition>
+</html>

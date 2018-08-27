@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LivraisonCreateDlg" widgetVar="LivraisonCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateLivraisonTitle}" closable="true">
+            <p:ajax event="close" listener="#{livraisonController.setSelectedLivraisons(null)}" update=":LivraisonListForm:datalist"/>
+            <h:form id="LivraisonCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{livraisonController.tocreate != null}">
+                        <p:outputLabel value="#{bundle.CreateLivraisonLabel_numeroBl}" for="numeroBl" />
+                        <p:inputText id="numeroBl" value="#{livraisonController.tocreate.numeroBl}" title="#{bundle.CreateLivraisonTitle_numeroBl}" required="true" requiredMessage="#{bundle.CreateLivraisonRequiredMessage_numeroBl}" placeholder="#{bundle.CreateLivraisonPlaceholder_numeroBl}" immediate="true"/>
+                        <p:outputLabel value="#{bundle.CreateLivraisonLabel_numeroFacture}" for="numeroFacture" />
+                        <p:inputText id="numeroFacture" value="#{livraisonController.tocreate.numeroFacture}" title="#{bundle.CreateLivraisonTitle_numeroFacture}" required="true" requiredMessage="#{bundle.CreateLivraisonRequiredMessage_numeroFacture}" placeholder="#{bundle.CreateLivraisonPlaceholder_numeroFacture}"/>
+                        <p:outputLabel value="#{bundle.CreateLivraisonLabel_numeroBc}" for="numeroBc" />
+                        <p:inputText id="numeroBc" value="#{livraisonController.tocreate.numeroBc}" title="#{bundle.CreateLivraisonTitle_numeroBc}" required="true" requiredMessage="#{bundle.CreateLivraisonRequiredMessage_numeroBc}" placeholder="#{bundle.CreateLivraisonPlaceholder_numeroBc}"/>
+                        <p:outputLabel value="#{bundle.CreateLivraisonLabel_dateLivraison}" for="dateLivraison" />
+                        <p:calendar id="dateLivraison" pattern="MM/dd/yyyy HH:mm:ss" value="#{livraisonController.tocreate.dateLivraison}" title="#{bundle.EditLivraisonTitle_dateLivraison}" required="true" requiredMessage="#{bundle.EditLivraisonRequiredMessage_dateLivraison}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateLivraisonLabel_nbArticles}" for="nbArticles" />
+                        <p:inputNumber id="nbArticles" value="#{livraisonController.tocreate.nbArticles}" title="#{bundle.CreateLivraisonTitle_nbArticles}" required="true" requiredMessage="#{bundle.CreateLivraisonRequiredMessage_nbArticles}" placeholder="#{bundle.CreateLivraisonPlaceholder_nbArticles}"/>
+                        <p:outputLabel value="#{bundle.CreateLivraisonLabel_montantFacture}" for="montantFacture" />
+                        <p:inputNumber id="montantFacture" value="#{livraisonController.tocreate.montantFacture}" title="#{bundle.CreateLivraisonTitle_montantFacture}" symbol="F CFA" symbolPosition="s" decimalSeparator="," thousandSeparator="." emptyValue="sign" placeholder="#{bundle.CreateLivraisonPlaceholder_montantFacture}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{livraisonController.create}" value="#{bundle.Save}" update="display,:LivraisonListForm:datalist,:growl" oncomplete="PF('LivraisonCreateDialog').hide()" validateClient="true"/>
+                    <p:commandButton actionListener="#{livraisonController.cancel}" value="#{bundle.Cancel}" onclick="PF('LivraisonCreateDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LivraisonDeleteDlg" widgetVar="LivraisonDeleteDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.DeleteLivraisonTitle}" closable="false">
+            <h:form id="LivraisonDeleteForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{livraisonController.selected != null}">
+                        <p:outputLabel value="#{bundle.DeleteLivraisonLabel_numeroBl}" for="numeroBl" />
+                        <p:inputText id="numeroBl" value="#{livraisonController.selected.numeroBl}" title="#{bundle.DeleteLivraisonTitle_numeroBl}" required="true" requiredMessage="#{bundle.DeleteLivraisonRequiredMessage_numeroBl}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteLivraisonLabel_numeroFacture}" for="numeroFacture" />
+                        <p:inputText id="numeroFacture" value="#{livraisonController.selected.numeroFacture}" title="#{bundle.DeleteLivraisonTitle_numeroFacture}" required="true" requiredMessage="#{bundle.DeleteLivraisonRequiredMessage_numeroFacture}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteLivraisonLabel_numeroBc}" for="numeroBc" />
+                        <p:inputText id="numeroBc" value="#{livraisonController.selected.numeroBc}" title="#{bundle.DeleteLivraisonTitle_numeroBc}" required="true" requiredMessage="#{bundle.DeleteLivraisonRequiredMessage_numeroBc}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteLivraisonLabel_dateLivraison}" for="dateLivraison" />
+                        <p:calendar id="dateLivraison" pattern="MM/dd/yyyy HH:mm:ss" value="#{livraisonController.selected.dateLivraison}" title="#{bundle.EditLivraisonTitle_dateLivraison}" required="true" requiredMessage="#{bundle.EditLivraisonRequiredMessage_dateLivraison}" showOn="button" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteLivraisonLabel_nbArticles}" for="nbLivraisons" />
+                        <p:inputText id="nbLivraisons" value="#{livraisonController.selected.nbArticles}" title="#{bundle.DeleteLivraisonTitle_nbArticles}" required="true" requiredMessage="#{bundle.DeleteLivraisonRequiredMessage_nbArticles}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteLivraisonLabel_montantFacture}" for="montantFacture" />
+                        <p:inputText id="montantFacture" value="#{livraisonController.selected.montantFacture}" title="#{bundle.DeleteLivraisonTitle_montantFacture}"  disabled="true"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{livraisonController.destroy}" value="#{bundle.Delete}" oncomplete="PF('LivraisonDeleteDialog').hide()" update=":growl,display,:LivraisonListForm">
+                        <p:confirm header="Confirmation" message="#{bundle.DeleteLivraisonConfirmationTitle}" icon="ui-icon-alert" />
+                    </p:commandButton>
+                    <p:confirmDialog id="LivraisonDeleteConfirmDialog" global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                        <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                    <p:commandButton actionListener="#{livraisonController.cancel}" value="#{bundle.Cancel}" onclick="LivraisonDeleteDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

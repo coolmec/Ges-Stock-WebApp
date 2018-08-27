@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmployeCreateDlg" widgetVar="EmployeCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateEmployeTitle}" closable="true">
+            <p:ajax event="close" listener="#{employeController.setSelectedEmployes(null)}" update=":EmployeListForm:datalist"/>
+            <h:form id="EmployeCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{employeController.tocreate != null}">
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel_matriculeEmploye}" for="matriculeEmploye" />
+                        <p:inputText id="matriculeEmploye" value="#{employeController.tocreate.matriculeEmploye}" title="#{bundle.CreateEmployeTitle_matriculeEmploye}" required="true" requiredMessage="#{bundle.CreateEmployeRequiredMessage_matriculeEmploye}" placeholder="Chiffre > 0(max 99999)"/>
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel_nomEmploye}" for="nomEmploye" />
+                        <p:inputText id="nomEmploye" value="#{employeController.tocreate.nomEmploye}" title="#{bundle.CreateEmployeTitle_nomEmploye}" required="true" requiredMessage="#{bundle.CreateEmployeRequiredMessage_nomEmploye}" placeholder="30 caractères maximum"/>
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel_prenomEmploye}" for="prenomEmploye" />
+                        <p:inputText id="prenomEmploye" value="#{employeController.tocreate.prenomEmploye}" title="#{bundle.CreateEmployeTitle_prenomEmploye}" required="true" requiredMessage="#{bundle.CreateEmployeRequiredMessage_prenomEmploye}" placeholder="50 caractères maximum"/>
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel_adresseEmploye}" for="adresseEmploye" />
+                        <p:inputTextarea rows="4" cols="30" id="adresseEmploye" value="#{employeController.tocreate.adresseEmploye}" title="#{bundle.CreateEmployeTitle_adresseEmploye}" required="true" requiredMessage="#{bundle.CreateEmployeRequiredMessage_adresseEmploye}"/>
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel_telephone1Employe}" for="telephone1Employe" />
+                        <p:inputMask id="telephone1Employe" mask="(+999) 99-99-99-99" value="#{employeController.tocreate.telephone1Employe}" title="#{bundle.CreateEmployeTitle_telephone1Employe}" required="true" requiredMessage="#{bundle.CreateEmployeRequiredMessage_telephone1Employe}"/>
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel_telephone2Employe}" for="telephone2Employe" />
+                        <p:inputMask id="telephone2Employe" mask="(+999) 99-99-99-99" value="#{employeController.tocreate.telephone2Employe}" title="#{bundle.CreateEmployeTitle_telephone2Employe}" required="true" requiredMessage="#{bundle.CreateEmployeRequiredMessage_telephone2Employe}"/>
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel_commentaires}" for="commentaires" />
+                        <p:inputTextarea rows="4" cols="30" id="commentaires" value="#{employeController.tocreate.commentaires}" title="#{bundle.CreateEmployeTitle_commentaires}" />
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel_departementEmploye}" for="departementEmploye" />
+                        <p:selectOneMenu id="departementEmploye" value="#{employeController.tocreate.departementEmploye}" required="true" requiredMessage="#{bundle.EditEmployeRequiredMessage_departementEmploye}">
+                            <f:selectItems value="#{departementController.itemsAvailableSelectOne}"
+                                           var="departementEmployeItem"
+                                           itemValue="#{departementEmployeItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateEmployeLabel_posteEmploye}" for="posteEmploye" />
+                        <p:selectOneMenu id="posteEmploye" value="#{employeController.tocreate.posteEmploye}" required="true" requiredMessage="#{bundle.EditEmployeRequiredMessage_posteEmploye}">
+                            <f:selectItems value="#{posteController.itemsAvailableSelectOne}"
+                                           var="posteEmployeItem"
+                                           itemValue="#{posteEmployeItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{employeController.create}" value="#{bundle.Save}" update="display,:EmployeListForm:datalist,:growl" oncomplete="PF('EmployeCreateDialog').hide()" validateClient="true"/>
+                    <p:commandButton actionListener="#{employeController.cancel}" value="#{bundle.Cancel}" onclick="PF('EmployeCreateDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

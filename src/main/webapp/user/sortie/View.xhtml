@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SortieViewDlg" widgetVar="SortieViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewSortieTitle}" closable="false">
+            <h:form id="SortieViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sortieController.selected != null}">
+                        <h:outputText value="#{bundle.ViewSortieLabel_idSortie}"/>
+                        <h:outputText value="#{sortieController.selected.idSortie}" title="#{bundle.ViewSortieTitle_idSortie}"/>
+                        <h:outputText value="#{bundle.ViewSortieLabel_qteArticle}"/>
+                        <h:outputText value="#{sortieController.selected.qteArticle}" title="#{bundle.ViewSortieTitle_qteArticle}"/>
+                        <h:outputText value="#{bundle.ViewSortieLabel_article}"/>
+                        <h:outputText value="#{sortieController.selected.article.nomArticle}" title="#{bundle.ViewSortieTitle_article}"/>
+                        <h:outputText value="#{bundle.ViewSortieLabel_numeroBonSortie}"/>
+                        <h:outputText value="#{sortieController.selected.numeroBonSortie}" title="#{bundle.ViewSortieTitle_numeroBonSortie}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="SortieViewDialog.hide()" actionListener="#{sortieController.cancel}"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

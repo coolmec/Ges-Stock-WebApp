@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <title>ACCUEIL MNS_STOCK</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+    </h:head>
+
+    <h:body>
+
+        <p:layout fullPage="true" collapseTitle="Reduire" expandTitle="Agrandir" closeTitle="Fermer" widgetVar="LayoutAccueil">
+
+            <p:layoutUnit position="north" collapsible="true" collapsed="false" resizable="true" header="BARRE DE MENUS" closable="true" size="100">
+                <h:form>
+                    <p:menubar>
+
+                        <p:submenu label="MENU">
+                            <p:menuitem value="Accueil" url="/"/>
+                            <p:menuitem value="Familles d'articles" url="/faces/famille/Index.xhtml"/>
+                            <p:menuitem value="Articles" url="/faces/article/Index.xhtml"/>
+                            <p:menuitem value="Bons de livraison" url="/faces/livraison/Index.xhtml"/>
+                            <p:menuitem value="Bons de sortie" url="/faces/bonsortie/Index.xhtml"/>
+                            <p:menuitem value="Entrées de stock" url="/faces/entree/Index.xhtml"/>
+                            <p:menuitem value="Sorties de stock" url="/faces/sortie/Index.xhtml"/>
+                            <p:menuitem value="Postes" url="/faces/poste/Index.xhtml"/>
+                            <p:menuitem value="Départements" url="/faces/departement/Index.xhtml"/>
+                            <p:menuitem value="Employés" url="/faces/employe/Index.xhtml"/>
+                            <p:menuitem value="Privilèges" url="/faces/privilege/Index.xhtml"/>
+                            <p:menuitem value="Utilisateurs" url="/faces/utilisateur/Index.xhtml"/>
+                            <p:menuitem value="Importer" url="/faces/import/Index.xhtml"/>
+                            <p:menuitem value="Mon compte" url="/faces/compte/Index.xhtml"/>
+                            <p:menuitem value="Déconnexion" url="/faces/connexion.xhtml"/>
+                        </p:submenu>
+                        <p:submenu label="AIDE">
+                            <p:menuitem value="Manuel d'utilisateur" url="/faces/aide/manuel.xhtml"/>
+                            <p:menuitem value="Raccourcis clavier" url="/faces/aide/raccourcis.xhtml"/>
+                            <p:menuitem value="Mises à jour" url="/faces/aide/updates.xhtml"/>
+                            <p:menuitem value="A propos de" url="/faces/aide/apropos.xhtml"/>
+                        </p:submenu>
+
+                    </p:menubar>
+                </h:form>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="west" collapsible="true" collapsed="true" resizable="true" size="200">
+                <h:outputText>LEFT</h:outputText>
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="center" id="LayoutUnitCenter">
+                <ui:include  src="AdminConnect.xhtml"/>
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="east" collapsible="true" collapsed="true" resizable="true" size="200">
+                <h:outputText>RIGHT</h:outputText>
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="south" collapsible="true" collapsed="true" resizable="true" size="100">
+                <h:outputText>BOTTOM</h:outputText>
+            </p:layoutUnit>
+            
+        </p:layout>
+        
+    </h:body>
+</html>
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ArticleCreateDlg" widgetVar="ArticleCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateArticleTitle}" closable="true">
+            <p:ajax event="close" listener="#{articleController.setSelectedArticles(null)}" update=":ArticleListForm:datalist"/>
+            <h:form id="ArticleCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{articleController.tocreate != null}">
+                        <p:outputLabel value="#{bundle.CreateArticleLabel_articlePK_codeArticle}" for="articlePK_codeArticle" />
+                        <p:inputText id="articlePK_codeArticle" value="#{articleController.tocreate.articlePK.codeArticle}" title="#{bundle.CreateArticleTitle_articlePK_codeArticle}" required="true" requiredMessage="#{bundle.CreateArticleRequiredMessage_articlePK_codeArticle}" placeholder="#{bundle.CreateArticlePlaceholder_articlePK_codeArticle}"/>
+                        <p:outputLabel value="#{bundle.CreateArticleLabel_nomArticle}" for="nomArticle" />
+                        <p:inputText id="nomArticle" value="#{articleController.tocreate.nomArticle}" title="#{bundle.CreateArticleTitle_nomArticle}" required="true" requiredMessage="#{bundle.CreateArticleRequiredMessage_nomArticle}" placeholder="#{bundle.CreateArticlePlaceholder_nomArticle}"/>
+                        <p:outputLabel value="#{bundle.CreateArticleLabel_descriptionArticle}" for="descriptionArticle" />
+                        <p:inputTextarea rows="4" cols="30" id="descriptionArticle" value="#{articleController.tocreate.descriptionArticle}" title="#{bundle.CreateArticleTitle_descriptionArticle}" />
+                        <p:outputLabel value="#{bundle.CreateArticleLabel_qteEnStock}" for="qteEnStock" />
+                        <p:inputNumber id="qteEnStock" value="#{articleController.tocreate.qteEnStock}" title="#{bundle.CreateArticleTitle_qteEnStock}" required="true" requiredMessage="#{bundle.CreateArticleRequiredMessage_qteEnStock}" placeholder="#{bundle.CreateArticlePlaceholder_qteEnStock}"/>
+                        <p:outputLabel value="#{bundle.CreateArticleLabel_puTtcNormal}" for="puTtcNormal" />
+                        <p:inputNumber id="puTtcNormal" value="#{articleController.tocreate.puTtcNormal}" title="#{bundle.CreateArticleTitle_puTtcNormal}" symbol="F CFA" symbolPosition="s" decimalSeparator="," thousandSeparator="." emptyValue="sign" decimalPlaces="3" placeholder="#{bundle.CreateArticlePlaceholder_puTtcNormal}"/>
+                        <p:outputLabel value="#{bundle.CreateArticleLabel_dernierPuTtc}" for="dernierPuTtc" />
+                        <p:inputNumber id="dernierPuTtc" value="#{articleController.tocreate.dernierPuTtc}" title="#{bundle.CreateArticleTitle_dernierPuTtc}" symbol="F CFA" symbolPosition="s" decimalSeparator="," thousandSeparator="." emptyValue="sign" decimalPlaces="3"  placeholder="#{bundle.CreateArticlePlaceholder_dernierPuTtc}"/>
+                        <p:outputLabel value="#{bundle.CreateArticleLabel_famille}" for="famille" />
+                        <p:selectOneMenu id="famille" value="#{articleController.tocreate.famille}" required="true" requiredMessage="#{bundle.EditArticleRequiredMessage_famille}">
+                            <f:selectItems value="#{familleController.itemsAvailableSelectOne}"
+                                           var="familleItem"
+                                           itemValue="#{familleItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{articleController.create}" value="#{bundle.Save}" update=":growl,display,:ArticleListForm:datalist" oncomplete="PF('ArticleCreateDialog').hide()" validateClient="true"/>
+                    <p:commandButton actionListener="#{articleController.cancel}" value="#{bundle.Cancel}" onclick="PF('ArticleCreateDialog').hide()" accesskey="backup"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

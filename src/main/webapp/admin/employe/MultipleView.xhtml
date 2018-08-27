@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmployesViewDlg" widgetVar="EmployesViewDialog" modal="true" closeOnEscape="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" header="#{bundle.ViewEmployeTitle}" closable="true">
+            <p:ajax event="close" listener="#{employeController.setSelectedEmployes(null)}" update=":EmployeListForm:datalist"/>
+            <h:form id="EmployesViewForm">
+            <p:dataTable var="select" value="#{employeController.selectedEmployes}" scrollable="true" resizableColumns="true">
+                <p:column headerText="#{bundle.ListEmployeTitle_matriculeEmploye}" width="50">
+                    <h:outputText value="#{select.matriculeEmploye}"/>
+                </p:column>
+                <p:column headerText="#{bundle.ListEmployeTitle_nomEmploye}" width="100" >
+                    <h:outputText value="#{select.nomEmploye}" />
+                </p:column>
+                <p:column headerText="#{bundle.ListEmployeTitle_prenomEmploye}" width="150">
+                    <h:outputText value="#{select.prenomEmploye}" />
+                </p:column>
+                <p:column headerText="#{bundle.ListEmployeTitle_departementEmploye}" width="70">
+                    <h:outputText value="#{select.departementEmploye.nomDepartement}" />
+                </p:column>
+                <p:column headerText="#{bundle.ListEmployeTitle_posteEmploye}" width="70">
+                    <h:outputText value="#{select.posteEmploye.nomPoste}" />
+                </p:column>
+            </p:dataTable>
+            <p:commandButton value="#{bundle.Close}" onclick="PF('EmployesViewDialog').hide()" actionListener="#{employeController.cancel}"/>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LivraisonsDeleteDlg" widgetVar="LivraisonsDeleteDialog" modal="true" closeOnEscape="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" header="#{bundle.DeleteLivraisonTitle}" closable="true">
+            <p:ajax event="close" listener="#{livraisonController.setSelectedLivraisons(null)}" update=":LivraisonListForm:datalist"/>
+            <h:form id="LivraisonsDeleteForm">            
+                <p:dataTable id="displays" var="selected" value="#{livraisonController.selectedLivraisons}" scrollable="true" resizableColumns="true" rows="5" rowsPerPageTemplate="5,10,15,20,30,40,50">
+                    
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column colspan="2" headerText="#{bundle.ListLivraisonTitle_numeroBl}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListLivraisonTitle_numeroFacture}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListLivraisonTitle_numeroBc}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListLivraisonTitle_dateLivraison}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListLivraisonTitle_nbArticles}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListLivraisonTitle_montantFacture}"/>
+                        </p:row>
+                        <p:row>
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                        </p:row>
+                    </p:columnGroup>
+                    
+                    <p:column>
+                        <p:outputLabel value="#{bundle.DeleteLivraisonLabel_numeroBl}" for="numeroBls" />                        
+                    </p:column>
+                    <p:column>
+                        <p:inputText id="numeroBls" value="#{selected.numeroBl}" title="#{bundle.DeleteLivraisonTitle_numeroBl}" required="true" requiredMessage="#{bundle.DeleteLivraisonRequiredMessage_numeroBl}" disabled="true"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.DeleteLivraisonLabel_numeroFacture}" for="numeroFactures" />
+                    </p:column>
+                    <p:column>    
+                        <p:inputText id="numeroFactures" value="#{selected.numeroFacture}" title="#{bundle.DeleteLivraisonTitle_numeroFacture}" disabled="true"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.DeleteLivraisonLabel_numeroBc}" for="numeroBcs" />
+                    </p:column>
+                    <p:column>    
+                        <p:inputText id="numeroBcs" value="#{selected.numeroBc}" title="#{bundle.DeleteLivraisonTitle_numeroBc}" required="true" requiredMessage="#{bundle.DeleteLivraisonRequiredMessage_numeroBc}" disabled="true"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.DeleteLivraisonLabel_dateLivraison}" for="dateLivraisons" />
+                    </p:column>
+                    <p:column>    
+                        <p:calendar id="dateLivraisons" value="#{selected.dateLivraison}" title="#{bundle.DeleteLivraisonTitle_dateLivraison}" disabled="true"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.DeleteLivraisonLabel_nbArticles}" for="nbArticles" />
+                    </p:column>
+                    <p:column>
+                        <p:inputNumber id="nbArticles" value="#{selected.nbArticles}" title="#{bundle.DeleteLivraisonTitle_nbArticles}" disabled="true"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.DeleteLivraisonLabel_montantFacture}" for="montantFactures" />
+                    </p:column>
+                    <p:column>
+                        <p:inputNumber id="montantFactures" value="#{selected.montantFacture}" title="#{bundle.DeleteLivraisonTitle_montantFacture}" disabled="true"/>
+                    </p:column>
+                </p:dataTable>
+                <p:commandButton actionListener="#{livraisonController.destroySelectedLivraisons}" value="#{bundle.Delete}" oncomplete="PF('LivraisonsDeleteDialog').hide()" update=":growl,displays,:LivraisonListForm:datalist">
+                    <p:confirm header="Confirmation" message="#{bundle.DeleteLivraisonsConfirmationTitle}" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:commandButton actionListener="#{livraisonController.cancel}" value="#{bundle.Cancel}" onclick="PF('LivraisonsDeleteDialog').hide()"/>
+            </h:form>        
+        </p:dialog>
+        
+    </ui:composition>
+</html>

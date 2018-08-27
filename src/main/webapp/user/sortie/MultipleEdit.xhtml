@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SortiesEditDlg" widgetVar="SortiesEditDialog" modal="true" closeOnEscape="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" header="#{bundle.EditSortieTitle}" closable="true">
+            <p:ajax event="close" listener="#{sortieController.setSelectedSorties(null)}" update=":SortieListForm:datalist"/>
+            <h:form id="SortiesEditForm">            
+                <p:dataTable id="displays" var="selected" value="#{sortieController.selectedSorties}" scrollable="true" resizableColumns="true" rows="5" rowsPerPageTemplate="5,10,15,20,30,40,50">
+                    
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column colspan="2" headerText="#{bundle.ListSortieTitle_idSortie}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListSortieTitle_qteArticle}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListSortieTitle_article}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListSortieTitle_numeroBonSortie}"/>
+                        </p:row>
+                        <p:row>
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                        </p:row>
+                    </p:columnGroup>
+                    
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditSortieLabel_idSortie}" for="idSorties" />                        
+                    </p:column>
+                    <p:column>
+                        <p:inputText id="idSorties" value="#{selected.idSortie}" title="#{bundle.EditSortieTitle_idSortie}" required="true" requiredMessage="#{bundle.EditSortieRequiredMessage_idSortie}" disabled="true"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditSortieLabel_qteArticle}" for="qteArticles" />
+                    </p:column> 
+                    <p:column>    
+                        <p:inputNumber id="qteArticles" value="#{selected.qteArticle}" title="#{bundle.EditSortieTitle_qteArticle}" required="true" requiredMessage="#{bundle.EditSortieRequiredMessage_qteArticle}"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditSortieLabel_article}" for="articles" />
+                    </p:column>
+                    <p:column>    
+                        <p:selectOneMenu id="articles" value="#{selected.article}" title="#{bundle.EditSortieTitle_article}" required="true" requiredMessage="#{bundle.EditSortieRequiredMessage_article}">
+                            <f:selectItems value="#{articleController.itemsAvailableSelectOne}"
+                                           var="articleItem"
+                                           itemValue="#{articleItem}" itemDisabled="false"/>
+                        </p:selectOneMenu>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditSortieLabel_numeroBonSortie}" for="numeroBonSorties" />
+                    </p:column>
+                    <p:column>
+                        <p:selectOneMenu id="numeroBonSorties" value="#{selected.numeroBonSortie}" required="true" requiredMessage="#{bundle.EditSortieRequiredMessage_numeroBonSortie}" disabled="true">
+                            <f:selectItems value="#{bonsortieController.itemsAvailableSelectOne}"
+                                           var="numeroBonSortieItem"
+                                           itemValue="#{numeroBonSortieItem}"/>
+                        </p:selectOneMenu>
+                    </p:column>
+                </p:dataTable>
+                <p:commandButton actionListener="#{sortieController.updateSelectedSorties}" value="#{bundle.Save}" update="SortiesEditDlg,:SortieListForm:datalist,:growl" oncomplete="PF('SortiesEditDialog').hide()"/>
+                <p:commandButton actionListener="#{sortieController.cancel}" value="#{bundle.Cancel}" onclick="PF('SortiesEditDialog').hide()"/>
+            </h:form>        
+        </p:dialog>
+        
+    </ui:composition>
+</html>

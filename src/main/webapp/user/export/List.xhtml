@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListExportTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            
+            <ui:include src="Growl.xhtml"/>
+            
+            <h:form id="ExportForm">
+                
+                    <p:panelGrid columns="2">
+                        <p:outputLabel for="export" value="Sélectionner un type :" />
+                        <p:selectOneMenu id="export" value="#{exportController.table}"  required="true" requiredMessage="#{bundle.ExportRequiredMessage}">
+                            <p:ajax event="itemSelect" listener="#{exportController.enabled()}" update="exportButton"/>
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" itemValue=""/>
+                            <f:selectItems value="#{exportController.tables}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                <p:commandButton id="exportButton" update="growl"  widgetVar="exportButton" icon="ui-icon-arrowthickstop-1-s"  value="#{bundle.Export}" oncomplete="PF('#{exportController.exportDialog()}').show()" disabled="#{exportController.disabled}"/>
+            </h:form>
+            <ui:include src="ExportArticles.xhtml"/>
+            <ui:include src="ExportEntrees.xhtml"/>
+            <ui:include src="ExportLivraisons.xhtml"/>
+            <ui:include src="ExportEmployes.xhtml"/>
+            <ui:include src="ExportBonSorties.xhtml"/>
+            <ui:include src="ExportSorties.xhtml"/>
+            <ui:include src="Loading.xhtml"/>
+        </ui:define>
+        <script type="text/javascript">
+            function start() {
+                PF('statusDialog').show();
+            }
+
+            function stop() {
+                PF('statusDialog').hide();
+            }
+        </script>
+    </ui:composition>
+    
+</html>

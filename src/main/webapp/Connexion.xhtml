@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.Connexion}" style="display: block; width:300px; margin: auto;text-align: center"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            
+            <ui:include src="Growl.xhtml"/>
+            
+            <h:form id="ArticleListForm">
+                
+                <p:panel header="#{bundle.ConnexionPanel}" style="width: 380px; margin: auto">
+                    <p:panelGrid columns="2" layout="grid">
+                        <p:outputLabel for="Login" value="#{bundle.ConnexionLoginLabel}" style="vertical-align: sub"/>
+                        <p:inputText id="Login" value="#{connexionController.login}" required="true" requiredMessage="#{bundle.ConnexionLoginRequiredMessage}"/>
+                        <p:outputLabel for="Password" value="#{bundle.ConnexionPasswordLabel}" style="vertical-align: sub"/>
+                        <p:password id="Password" value="#{connexionController.password}" required="true" requiredMessage="#{bundle.ConnexionPasswordRequiredMessage}" validatorMessage="#{bundle.ConnexionPasswordValidationMessage}">
+                            <f:validateLength minimum="6" ></f:validateLength>
+                        </p:password>
+                    </p:panelGrid>
+                    <p:commandButton id="connexionButton" style="margin-left: 37%" value="#{bundle.ConnexionButton}" update="Login, Password, growl" validateClient="true" action="#{connexionController.connect}"/>
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+    
+</html>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ArticlesEditDlg" widgetVar="ArticlesEditDialog" modal="true" closeOnEscape="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" header="#{bundle.EditArticleTitle}" closable="true">
+            <p:ajax event="close" listener="#{articleController.setSelectedArticles(null)}" update=":ArticleListForm:datalist"/>
+            <h:form id="ArticlesEditForm">            
+                <p:dataTable id="displays" var="selected" value="#{articleController.selectedArticles}" scrollable="true" resizableColumns="true" rows="5" rowsPerPageTemplate="5,10,15,20,30,40,50">
+                    
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column colspan="2" headerText="#{bundle.ListArticleTitle_nomArticle}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListArticleTitle_descriptionArticle}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListArticleTitle_qteEnStock}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListArticleTitle_puTtcNormal}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListArticleTitle_dernierPuTtc}"/>
+                        </p:row>
+                        <p:row>
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                        </p:row>
+                    </p:columnGroup>
+                    
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditArticleLabel_nomArticle}" for="nomArticles" />                        
+                    </p:column>
+                    <p:column>
+                        <p:inputText id="nomArticles" value="#{selected.nomArticle}" title="#{bundle.EditArticleTitle_nomArticle}" required="true" requiredMessage="#{bundle.EditArticleRequiredMessage_nomArticle}"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditArticleLabel_descriptionArticle}" for="descriptionArticles" />
+                    </p:column>
+                    <p:column>    
+                        <p:inputTextarea rows="4" cols="30" id="descriptionArticles" value="#{selected.descriptionArticle}" title="#{bundle.EditArticleTitle_descriptionArticle}" />
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditArticleLabel_qteEnStock}" for="qteEnStocks" />
+                    </p:column>
+                    <p:column>    
+                        <p:inputNumber id="qteEnStocks" value="#{selected.qteEnStock}" title="#{bundle.EditArticleTitle_qteEnStock}" required="true" requiredMessage="#{bundle.EditArticleRequiredMessage_qteEnStock}" disabled="true"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditArticleLabel_puTtcNormal}" for="puTtcNormals" />
+                    </p:column>
+                    <p:column>    
+                        <p:inputNumber id="puTtcNormals" value="#{selected.puTtcNormal}" title="#{bundle.EditArticleTitle_puTtcNormal}" symbol="F CFA" symbolPosition="s" decimalSeparator="," thousandSeparator="." emptyValue="sign" decimalPlaces="3"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditArticleLabel_dernierPuTtc}" for="dernierPuTtcs" />
+                    </p:column>
+                    <p:column>
+                        <p:inputNumber id="dernierPuTtcs" value="#{selected.dernierPuTtc}" title="#{bundle.EditArticleTitle_dernierPuTtc}" symbol="F CFA" symbolPosition="s" decimalSeparator="," thousandSeparator="." emptyValue="sign" decimalPlaces="3" disabled="true"/>
+                    </p:column>
+                </p:dataTable>
+                <p:commandButton actionListener="#{articleController.updateSelectedArticles}" value="#{bundle.Save}" update="ArticlesEditDlg,:ArticleListForm:datalist,:growl" oncomplete="PF('ArticlesEditDialog').hide()"/>
+                <p:commandButton actionListener="#{articleController.cancel}" value="#{bundle.Cancel}" onclick="PF('ArticlesEditDialog').hide()"/>
+            </h:form>        
+        </p:dialog>
+        
+    </ui:composition>
+</html>

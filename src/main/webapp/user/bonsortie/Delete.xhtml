@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BonsortieDeleteDlg" widgetVar="BonsortieDeleteDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.DeleteBonsortieTitle}" closable="false">
+            <h:form id="BonsortieDeleteForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{bonsortieController.selected != null}">
+                        <p:outputLabel value="#{bundle.DeleteBonsortieLabel_numeroBonSortie}" for="numeroBonSortie" />
+                        <p:inputText id="numeroBonSortie" value="#{bonsortieController.selected.numeroBonSortie}" title="#{bundle.DeleteBonsortieTitle_numeroBonSortie}" required="true" requiredMessage="#{bundle.DeleteBonsortieRequiredMessage_numeroBonSortie}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteBonsortieLabel_dateSortie}" for="dateSortie" />
+                        <p:calendar id="dateSortie" pattern="MM/dd/yyyy HH:mm:ss" value="#{bonsortieController.selected.dateSortie}" title="#{bundle.EditBonsortieTitle_dateSortie}" required="true" requiredMessage="#{bundle.EditBonsortieRequiredMessage_dateSortie}" showOn="button" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteBonsortieLabel_codeDepartement}" for="codeDepartement" />
+                        <p:selectOneMenu id="codeDepartement" value="#{bonsortieController.selected.codeDepartement}" required="true" requiredMessage="#{bundle.EditBonsortieRequiredMessage_codeDepartement}" disabled="true">
+                            <f:selectItems value="#{departementController.itemsAvailableSelectOne}"
+                                           var="codeDepartementItem"
+                                           itemValue="#{codeDepartementItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.DeleteBonsortieLabel_matriculeEmploye}" for="matriculeEmploye" />
+                        <p:selectOneMenu id="matriculeEmploye" value="#{bonsortieController.selected.matriculeEmploye}" required="true" requiredMessage="#{bundle.EditBonsortieRequiredMessage_matriculeEmploye}" disabled="true">
+                            <f:selectItems value="#{employeController.itemsAvailableSelectOne}"
+                                           var="matriculeEmployeItem"
+                                           itemValue="#{matriculeEmployeItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{bonsortieController.destroy}" value="#{bundle.Delete}" oncomplete="PF('BonsortieDeleteDialog').hide()" update=":growl,display,:BonsortieListForm">
+                        <p:confirm header="Confirmation" message="#{bundle.DeleteBonsortieConfirmationTitle}" icon="ui-icon-alert" />
+                    </p:commandButton>
+                    <p:confirmDialog id="BonsortieDeleteConfirmDialog" global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                        <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                    <p:commandButton actionListener="#{bonsortieController.cancel}" value="#{bundle.Cancel}" onclick="BonsortieDeleteDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

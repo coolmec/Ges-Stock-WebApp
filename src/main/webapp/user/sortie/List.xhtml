@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListSortieTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            
+            <ui:include src="Growl.xhtml"/>            
+            
+            <h:form id="SortieListForm">
+                
+                <p:panel header="#{bundle.ListSortieTitle}">
+                    <p:dataTable id="datalist" value="#{sortieController.items}" var="item"
+                                 selection="#{sortieController.selectedSorties}"
+                                 paginator="true"
+                                 rowKey="#{item.idSortie}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 widgetVar="sortiesTable"
+                                 emptyMessage="#{bundle.ListSortieEmpty}"
+                                 filteredValue="#{sortieController.filteredItems}"
+                                 sortMode="multiple"
+                                 draggableColumns="true"
+                                 >
+
+                        <p:ajax event="rowSelect" listener="#{sortieController.onRowUnselect}" update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" listener="#{sortieController.onRowSelect}" update="createButton viewButton editButton deleteButton"/>
+                        
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="#{bundle.AllSearch}" />
+                                <p:inputText id="globalFilter" onkeyup="PF('sortiesTable').filter()" style="width:150px" placeholder="#{bundle.SearchKeyword}"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+                        <p:column filterBy="#{item.idSortie}" filterMatchMode="contains" sortBy="#{item.idSortie}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSortieTitle_idSortie}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idSortie}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.qteArticle}" filterMatchMode="contains" sortBy="#{item.qteArticle}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSortieTitle_qteArticle}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.qteArticle}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.nomArticle}" filterMatchMode="contains" sortBy="#{item.nomArticle}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSortieTitle_article}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.article.nomArticle}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.numeroBonSortie}" filterMatchMode="contains" sortBy="#{item.numeroBonSortie}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListSortieTitle_numeroBonSortie}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numeroBonSortie}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" update=":SortieCreateForm" oncomplete="PF('SortieCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}"   update=":SortiesViewForm,:SortieViewForm,viewButton"   oncomplete="PF('#{sortieController.viewLink()}').show()"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}"   update=":SortiesEditForm,:SortieEditForm,editButton"   oncomplete="PF('#{sortieController.editLink()}').show()">
+                                <f:actionListener binding="#{sortieController.setToupdates(sortieController.selectedSorties)}"/>
+                            </p:commandButton>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" update=":SortiesDeleteForm,:SortieDeleteForm,deleteButton" oncomplete="PF('#{sortieController.deleteLink()}').show()"
+                                             rendered="#{connexionController.render}"/>
+                            <p:commandButton id="refreshButton"  widgetVar="refreshButton" icon="ui-icon-refresh"  value="#{bundle.Refresh}" update="SortieListForm" action="Index.xhtml"/>
+                        </f:facet>
+                    </p:dataTable>
+                    <h3>Exporter toutes les sorties d'articles</h3>
+                    <h:commandLink>
+                        <p:graphicImage library="images" name="excel.png" />
+                        <p:dataExporter type="xls" target="datalist" fileName="#{bundle.FilenameSortie}" pageOnly="false"/>
+                    </h:commandLink>
+
+                    <h:commandLink>
+                        <p:graphicImage library="images" name="pdf.png" />
+                        <p:dataExporter type="pdf" target="datalist" fileName="#{bundle.FilenameSortie}" pageOnly="false" />
+                    </h:commandLink>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="SingleView.xhtml"/>
+            <ui:include src="MultipleView.xhtml"/>
+            <ui:include src="SingleEdit.xhtml"/>
+            <ui:include src="MultipleEdit.xhtml"/>
+            <ui:include src="SingleDelete.xhtml"/>
+            <ui:include src="MultipleDelete.xhtml"/>
+            
+            <h:form>                            
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                    <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                </p:confirmDialog>                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

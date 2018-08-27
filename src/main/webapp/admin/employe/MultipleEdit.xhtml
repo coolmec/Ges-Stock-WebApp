@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+       <p:dialog id="EmployesEditDlg" widgetVar="EmployesEditDialog" modal="true" closeOnEscape="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" header="#{bundle.EditEmployeTitle}" closable="true">
+            <p:ajax event="close" listener="#{employeController.setSelectedEmployes(null)}" update=":EmployeListForm:datalist"/>
+            <h:form id="EmployesEditForm">            
+                <p:dataTable id="displays" var="selected" value="#{employeController.selectedEmployes}" scrollable="true" resizableColumns="true" rows="5" rowsPerPageTemplate="5,10,15,20,30,40,50">
+                    
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column colspan="2" headerText="#{bundle.ListEmployeTitle_matriculeEmploye}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListEmployeTitle_nomEmploye}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListEmployeTitle_prenomEmploye}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListEmployeTitle_departementEmploye}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListEmployeTitle_posteEmploye}"/>
+                        </p:row>
+                        <p:row>
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                        </p:row>
+                    </p:columnGroup>
+                    
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditEmployeLabel_matriculeEmploye}" for="matriculeEmployes" />                        
+                    </p:column>
+                    <p:column>
+                        <p:inputText id="matriculeEmployes" value="#{selected.matriculeEmploye}" title="#{bundle.EditEmployeTitle_matriculeEmploye}" required="true" requiredMessage="#{bundle.EditEmployeRequiredMessage_matriculeEmploye}" disabled="true"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditEmployeLabel_nomEmploye}" for="nomEmployes" />
+                    </p:column>
+                    <p:column>    
+                        <p:inputText id="nomEmployes" value="#{selected.nomEmploye}" title="#{bundle.EditEmployeTitle_nomEmploye}" required="true" requiredMessage="#{bundle.EditEmployeRequiredMessage_nomEmploye}"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditEmployeLabel_prenomEmploye}" for="prenomEmployes" />
+                    </p:column>
+                    <p:column>    
+                        <p:inputText id="prenomEmployes" value="#{selected.prenomEmploye}" title="#{bundle.EditEmployeTitle_prenomEmploye}" required="true" requiredMessage="#{bundle.EditEmployeRequiredMessage_prenomEmploye}"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditEmployeLabel_departementEmploye}" for="departementEmployes" />
+                    </p:column>
+                    <p:column>    
+                        <p:selectOneMenu id="departementEmployes" value="#{selected.departementEmploye}" required="true" requiredMessage="#{bundle.EditEmployeRequiredMessage_departementEmploye}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{departementController.itemsAvailableSelectOne}"
+                                           var="departementEmployeItem"
+                                           itemValue="#{departementEmployeItem}"/>
+                        </p:selectOneMenu>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditEmployeLabel_posteEmploye}" for="posteEmployes" />
+                    </p:column>
+                    <p:column>
+                        <p:selectOneMenu id="posteEmployes" value="#{selected.posteEmploye}" required="true" requiredMessage="#{bundle.EditEmployeRequiredMessage_posteEmploye}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{posteController.itemsAvailableSelectOne}"
+                                           var="posteEmployeItem"
+                                           itemValue="#{posteEmployeItem}"/>
+                        </p:selectOneMenu>
+                    </p:column>
+                </p:dataTable>
+                <p:commandButton actionListener="#{employeController.updateSelectedEmployes}" value="#{bundle.Edit}" oncomplete="PF('EmployesEditDialog').hide()" update=":growl,displays,:EmployeListForm:datalist"/>
+                <p:commandButton actionListener="#{employeController.cancel}" value="#{bundle.Cancel}" onclick="PF('EmployesEditDialog').hide()"/>
+            </h:form>        
+        </p:dialog>
+        
+    </ui:composition>
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SortieCreateDlg" widgetVar="SortieCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateSortieTitle}" closable="true">
+            <p:ajax event="close" listener="#{sortieController.setSelectedSorties(null)}" update=":SortieListForm:datalist"/>
+            <h:form id="SortieCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sortieController.tocreate != null}">
+                        <p:outputLabel value="#{bundle.CreateSortieLabel_idSortie}" for="idSortie" />
+                        <p:inputText id="idSortie" value="#{sortieController.tocreate.idSortie}" title="#{bundle.CreateSortieTitle_idSortie}" required="true" requiredMessage="#{bundle.CreateSortieRequiredMessage_idSortie}" disabled="true" placeholder="#{bundle.CreateSortiePlaceholder_idSortie}"/>
+                        <p:outputLabel value="#{bundle.CreateSortieLabel_qteArticle}" for="qteArticle" />
+                        <p:inputText id="qteArticle" value="#{sortieController.tocreate.qteArticle}" title="#{bundle.CreateSortieTitle_qteArticle}" required="true" requiredMessage="#{bundle.CreateSortieRequiredMessage_qteArticle}" placeholder="#{bundle.CreateSortiePlaceholder_qteArticle}"/>
+                        <p:outputLabel value="#{bundle.CreateSortieLabel_article}" for="article" />
+                        <p:selectOneMenu id="article" value="#{sortieController.tocreate.article}" required="false" requiredMessage="#{bundle.EditSortieRequiredMessage_article}">
+                            <f:selectItems value="#{articleController.itemsAvailableSelectOne}"
+                                           var="articleItem"
+                                           itemValue="#{articleItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateSortieLabel_numeroBonSortie}" for="numeroBonSortie" />
+                        <p:selectOneMenu id="numeroBonSortie" value="#{sortieController.tocreate.numeroBonSortie}" required="true" requiredMessage="#{bundle.EditSortieRequiredMessage_numeroBonSortie}">
+                            <f:selectItems value="#{bonsortieController.itemsAvailableSelectOne}"
+                                           var="numeroBonSortieItem"
+                                           itemValue="#{numeroBonSortieItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Save}" update="display,:SortieListForm:datalist,:growl" oncomplete="PF('SortieCreateDialog').hide()">
+                        <f:actionListener binding="#{sortieController.create()}"/>
+                        <f:actionListener binding="#{articleController.updateFromCreateSortie(sortieController)}"/>
+                    </p:commandButton>
+                    <p:commandButton actionListener="#{sortieController.cancel}" value="#{bundle.Cancel}" onclick="PF('SortieCreateDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

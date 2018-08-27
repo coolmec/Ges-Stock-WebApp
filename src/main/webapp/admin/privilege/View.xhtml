@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PrivilegeViewDlg" widgetVar="PrivilegeViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPrivilegeTitle}" closable="true">
+            <p:ajax event="close" listener="#{privilegeController.setSelected(null)}" update=":PrivilegeListForm:datalist"/>
+            <h:form id="PrivilegeViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{privilegeController.selected != null}">
+                        <h:outputText value="#{bundle.ViewPrivilegeLabel_codePrivilege}"/>
+                        <h:outputText value="#{privilegeController.selected.codePrivilege}" title="#{bundle.ViewPrivilegeTitle_codePrivilege}"/>
+                        <h:outputText value="#{bundle.ViewPrivilegeLabel_libellePrivilege}"/>
+                        <h:outputText value="#{privilegeController.selected.libellePrivilege}" title="#{bundle.ViewPrivilegeTitle_libellePrivilege}"/>
+                        <h:outputText value="#{bundle.ViewPrivilegeLabel_descriptionPrivilege}"/>
+                        <h:outputText value="#{privilegeController.selected.descriptionPrivilege}" title="#{bundle.ViewPrivilegeTitle_descriptionPrivilege}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PF('PrivilegeViewDialog').hide()" actionListener="#{privilegeController.cancel}"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

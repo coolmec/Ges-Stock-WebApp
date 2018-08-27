@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LivraisonEditDlg" widgetVar="LivraisonEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditLivraisonTitle}" closable="false">
+            <h:form id="LivraisonEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{livraisonController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditLivraisonLabel_numeroBl}" for="numeroBl" />
+                        <p:inputText id="numeroBl" value="#{livraisonController.selected.numeroBl}" title="#{bundle.EditLivraisonTitle_numeroBl}" required="true" requiredMessage="#{bundle.EditLivraisonRequiredMessage_numeroBl}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.EditLivraisonLabel_numeroFacture}" for="numeroFacture" />
+                        <p:inputText id="numeroFacture" value="#{livraisonController.selected.numeroFacture}" title="#{bundle.EditLivraisonTitle_numeroFacture}" required="true" requiredMessage="#{bundle.EditLivraisonRequiredMessage_numeroFacture}"/>
+                        <p:outputLabel value="#{bundle.EditLivraisonLabel_numeroBc}" for="numeroBc" />
+                        <p:inputText id="numeroBc" value="#{livraisonController.selected.numeroBc}" title="#{bundle.EditLivraisonTitle_numeroBc}" required="true" requiredMessage="#{bundle.EditLivraisonRequiredMessage_numeroBc}"/>
+                        <p:outputLabel value="#{bundle.EditLivraisonLabel_dateLivraison}" for="dateLivraison" />
+                        <p:calendar id="dateLivraison" pattern="MM/dd/yyyy HH:mm:ss" value="#{livraisonController.selected.dateLivraison}" title="#{bundle.EditLivraisonTitle_dateLivraison}" required="true" requiredMessage="#{bundle.EditLivraisonRequiredMessage_dateLivraison}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditLivraisonLabel_nbArticles}" for="nbArticles" />
+                        <p:inputText id="nbArticles" value="#{livraisonController.selected.nbArticles}" title="#{bundle.EditLivraisonTitle_nbArticles}" required="true" requiredMessage="#{bundle.EditLivraisonRequiredMessage_nbArticles}"/>
+                        <p:outputLabel value="#{bundle.EditLivraisonLabel_montantFacture}" for="montantFacture" />
+                        <p:inputText id="montantFacture" value="#{livraisonController.selected.montantFacture}" title="#{bundle.EditLivraisonTitle_montantFacture}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{livraisonController.update}" value="#{bundle.Save}" update="display,:LivraisonListForm:datalist,:growl" oncomplete="handleSubmit(args, 'LivraisonEditDialog');" onclick="LivraisonEditDialog.hide()"/>
+                    <p:commandButton actionListener="#{livraisonController.cancel}" value="#{bundle.Cancel}" onclick="LivraisonEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

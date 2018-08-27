@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmployeDeleteDlg" widgetVar="EmployeDeleteDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.DeleteEmployeTitle}" closable="true">
+            <p:ajax event="close" listener="#{employeController.setSelectedEmployes(null)}" update=":EmployeListForm:datalist"/>
+            <h:form id="EmployeDeleteForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{!empty employeController.selectedEmployes}">
+                        <p:outputLabel value="#{bundle.DeleteEmployeLabel_matriculeEmploye}" for="matriculeEmploye" />
+                        <p:inputText id="matriculeEmploye" value="#{employeController.selectedEmployes.get(0).matriculeEmploye}" title="#{bundle.DeleteEmployeTitle_matriculeEmploye}" required="true" requiredMessage="#{bundle.DeleteEmployeRequiredMessage_matriculeEmploye}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteEmployeLabel_nomEmploye}" for="nomEmploye" />
+                        <p:inputText id="nomEmploye" value="#{employeController.selectedEmployes.get(0).nomEmploye}" title="#{bundle.DeleteEmployeTitle_nomEmploye}" required="true" requiredMessage="#{bundle.DeleteEmployeRequiredMessage_nomEmploye}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteEmployeLabel_prenomEmploye}" for="prenomEmploye" />
+                        <p:inputText id="prenomEmploye" value="#{employeController.selectedEmployes.get(0).prenomEmploye}" title="#{bundle.DeleteEmployeTitle_prenomEmploye}" required="true" requiredMessage="#{bundle.DeleteEmployeRequiredMessage_prenomEmploye}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteEmployeLabel_adresseEmploye}" for="adresseEmploye" />
+                        <p:inputTextarea rows="4" cols="30" id="adresseEmploye" value="#{employeController.selectedEmployes.get(0).adresseEmploye}" title="#{bundle.DeleteEmployeTitle_adresseEmploye}" required="true" requiredMessage="#{bundle.DeleteEmployeRequiredMessage_adresseEmploye}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteEmployeLabel_telephone1Employe}" for="telephone1Employe" />
+                        <p:inputText id="telephone1Employe" value="#{employeController.selectedEmployes.get(0).telephone1Employe}" title="#{bundle.DeleteEmployeTitle_telephone1Employe}" required="true" requiredMessage="#{bundle.DeleteEmployeRequiredMessage_telephone1Employe}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteEmployeLabel_telephone2Employe}" for="telephone2Employe" />
+                        <p:inputText id="telephone2Employe" value="#{employeController.selectedEmployes.get(0).telephone2Employe}" title="#{bundle.DeleteEmployeTitle_telephone2Employe}" required="true" requiredMessage="#{bundle.DeleteEmployeRequiredMessage_telephone2Employe}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteEmployeLabel_commentaires}" for="commentaires" />
+                        <p:inputTextarea rows="4" cols="30" id="commentaires" value="#{employeController.selectedEmployes.get(0).commentaires}" title="#{bundle.DeleteEmployeTitle_commentaires}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteEmployeLabel_departementEmploye}" for="departementEmploye" />
+                        <p:selectOneMenu id="departementEmploye" value="#{employeController.selectedEmployes.get(0).departementEmploye}" required="true" requiredMessage="#{bundle.EditEmployeRequiredMessage_departementEmploye}" disabled="true">
+                            <f:selectItems value="#{departementController.itemsAvailableSelectOne}"
+                                           var="departementEmployeItem"
+                                           itemValue="#{departementEmployeItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.DeleteEmployeLabel_posteEmploye}" for="posteEmploye" />
+                        <p:selectOneMenu id="posteEmploye" value="#{employeController.selectedEmployes.get(0).posteEmploye}" required="true" requiredMessage="#{bundle.EditEmployeRequiredMessage_posteEmploye}" disabled="true">
+                            <f:selectItems value="#{posteController.itemsAvailableSelectOne}"
+                                           var="posteEmployeItem"
+                                           itemValue="#{posteEmployeItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{employeController.destroySelectedEmploye}" value="#{bundle.Delete}" oncomplete="PF('EmployeDeleteDialog').hide()" update=":growl,display,:EmployeListForm">
+                        <p:confirm header="Confirmation" message="#{bundle.DeleteEmployeConfirmationTitle}" icon="ui-icon-alert" />
+                    </p:commandButton>
+                    <p:commandButton actionListener="#{employeController.cancel}" value="#{bundle.Cancel}" onclick="PF('EmployeDeleteDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

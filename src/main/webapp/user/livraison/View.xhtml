@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LivraisonViewDlg" widgetVar="LivraisonViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewLivraisonTitle}" closable="false">
+            <h:form id="LivraisonViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{livraisonController.selected != null}">
+                        <h:outputText value="#{bundle.ViewLivraisonLabel_numeroBl}"/>
+                        <h:outputText value="#{livraisonController.selected.numeroBl}" title="#{bundle.ViewLivraisonTitle_numeroBl}"/>
+                        <h:outputText value="#{bundle.ViewLivraisonLabel_numeroFacture}"/>
+                        <h:outputText value="#{livraisonController.selected.numeroFacture}" title="#{bundle.ViewLivraisonTitle_numeroFacture}"/>
+                        <h:outputText value="#{bundle.ViewLivraisonLabel_numeroBc}"/>
+                        <h:outputText value="#{livraisonController.selected.numeroBc}" title="#{bundle.ViewLivraisonTitle_numeroBc}"/>
+                        <h:outputText value="#{bundle.ViewLivraisonLabel_dateLivraison}"/>
+                        <h:outputText value="#{livraisonController.selected.dateLivraison}" title="#{bundle.ViewLivraisonTitle_dateLivraison}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewLivraisonLabel_nbArticles}"/>
+                        <h:outputText value="#{livraisonController.selected.nbArticles}" title="#{bundle.ViewLivraisonTitle_nbArticles}"/>
+                        <h:outputText value="#{bundle.ViewLivraisonLabel_montantFacture}"/>
+                        <h:outputText value="#{livraisonController.selected.montantFacture}" title="#{bundle.ViewLivraisonTitle_montantFacture}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="LivraisonViewDialog.hide()" actionListener="#{livraisonController.cancel}"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

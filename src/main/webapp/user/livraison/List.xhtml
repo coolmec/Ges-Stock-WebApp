@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListLivraisonTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            
+            <ui:include src="Growl.xhtml"/>
+            
+            <h:form id="LivraisonListForm">
+                
+                <p:panel header="#{bundle.ListLivraisonTitle}">
+                    <p:dataTable id="datalist" value="#{livraisonController.items}" var="item"
+                                 selection="#{livraisonController.selectedLivraisons}"
+                                 paginator="true"
+                                 rowKey="#{item.numeroBl}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,15,20,30,40,50"
+                                 widgetVar="livraisonsTable"
+                                 emptyMessage="#{bundle.ListLivraisonEmpty}"
+                                 filteredValue="#{livraisonController.filteredItems}"
+                                 sortMode="multiple"
+                                 draggableColumns="true"
+                                 >
+
+                        <p:ajax event="rowSelect" listener="#{livraisonController.onRowUnselect}" update="viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" listener="#{livraisonController.onRowUnselect}" update="viewButton editButton deleteButton"/>
+                        
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="#{bundle.AllSearch}" />
+                                <p:inputText id="globalFilter" onkeyup="PF('livraisonsTable').filter()" style="width:150px" placeholder="#{bundle.SearchKeyword}"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+                        <p:column filterBy="#{item.numeroBl}" filterMatchMode="contains" sortBy="#{item.numeroBl}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListLivraisonTitle_numeroBl}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numeroBl}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.numeroFacture}" filterMatchMode="contains" sortBy="#{item.numeroFacture}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListLivraisonTitle_numeroFacture}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numeroFacture}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.numeroBc}" filterMatchMode="contains" sortBy="#{item.numeroBc}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListLivraisonTitle_numeroBc}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numeroBc}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.nbArticles}" filterMatchMode="contains" sortBy="#{item.nbArticles}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListLivraisonTitle_nbArticles}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nbArticles}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.montantFacture}" filterMatchMode="contains" sortBy="#{item.montantFacture}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListLivraisonTitle_montantFacture}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.montantFacture}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton"  icon="ui-icon-plus"   value="#{bundle.Create}"  update=":LivraisonCreateForm"  oncomplete="PF('LivraisonCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"    widgetVar="viewButton"   icon="ui-icon-search" value="#{bundle.View}"   update=":LivraisonsViewForm,:LivraisonViewForm,viewButton"       oncomplete="PF('#{livraisonController.viewLink()}').show()"   />
+                            <p:commandButton id="editButton"    widgetVar="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}"   update=":LivraisonsEditForm,:LivraisonEditForm,editButton"       oncomplete="PF('#{livraisonController.editLink()}').show()"   />
+                            <p:commandButton id="deleteButton"  widgetVar="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" update=":LivraisonsDeleteForm,:LivraisonDeleteForm,deleteButton" oncomplete="PF('#{livraisonController.deleteLink()}').show()" 
+                                             rendered="#{connexionController.render}"/>
+                            <p:commandButton id="refreshButton"  widgetVar="refreshButton" icon="ui-icon-refresh"  value="#{bundle.Refresh}" update="LivraisonListForm" action="Index.xhtml"/>
+                        </f:facet>
+                    </p:dataTable>
+                    <h3>Exporter tous les bons de livraison</h3>
+                    <h:commandLink>
+                        <p:graphicImage library="images" name="excel.png" />
+                        <p:dataExporter type="xls" target="datalist" fileName="#{bundle.FilenameLivraison}" pageOnly="false"/>
+                    </h:commandLink>
+
+                    <h:commandLink>
+                        <p:graphicImage library="images" name="pdf.png" />
+                        <p:dataExporter type="pdf" target="datalist" fileName="#{bundle.FilenameLivraison}" pageOnly="false" />
+                    </h:commandLink>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="SingleView.xhtml"/>
+            <ui:include src="MultipleView.xhtml"/>
+            <ui:include src="SingleEdit.xhtml"/>
+            <ui:include src="MultipleEdit.xhtml"/>
+            <ui:include src="SingleDelete.xhtml"/>
+            <ui:include src="MultipleDelete.xhtml"/>
+            
+            <h:form>                            
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                    <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                </p:confirmDialog>                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+    
+</html>

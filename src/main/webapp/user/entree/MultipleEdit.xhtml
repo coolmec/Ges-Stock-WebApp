@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EntreesEditDlg" widgetVar="EntreesEditDialog" modal="true" closeOnEscape="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" header="#{bundle.EditEntreeTitle}" closable="true">
+            <p:ajax event="close" listener="#{entreeController.setSelectedEntrees(null)}" update=":EntreeListForm:datalist"/>
+            <h:form id="EntreesEditForm">            
+                <p:dataTable id="displays" var="selected" value="#{entreeController.selectedEntrees}" scrollable="true" resizableColumns="true" rows="5" rowsPerPageTemplate="5,10,15,20,30,40,50">
+                    
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column colspan="2" headerText="#{bundle.ListEntreeTitle_idEntree}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListEntreeTitle_article}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListEntreeTitle_qteArticle}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListEntreeTitle_puTtcArticle}"/>
+                            <p:column colspan="2" headerText="#{bundle.ListEntreeTitle_numeroBl}"/>
+                        </p:row>
+                        <p:row>
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                            <p:column headerText="#{bundle.HeaderText_label}"/>
+                            <p:column headerText="#{bundle.HeaderText_value}" />
+                        </p:row>
+                    </p:columnGroup>
+                    
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditEntreeLabel_idEntree}" for="idEntrees" />                        
+                    </p:column>
+                    <p:column>
+                        <p:inputText id="idEntrees" value="#{selected.idEntree}" title="#{bundle.EditEntreeTitle_idEntree}" required="true" requiredMessage="#{bundle.EditEntreeRequiredMessage_idEntree}" disabled="true"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditEntreeLabel_article}" for="articles" />
+                    </p:column>
+                    <p:column>    
+                        <p:selectOneMenu id="articles" value="#{selected.article}" title="#{bundle.EditEntreeTitle_article}" required="true" requiredMessage="#{bundle.EditEntreeRequiredMessage_article}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{articleController.itemsAvailableSelectOne}"
+                                           var="articleItem"
+                                           itemValue="#{articleItem}" itemDisabled="false"/>
+                        </p:selectOneMenu>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditEntreeLabel_qteArticle}" for="qteArticles" />
+                    </p:column> 
+                    <p:column>    
+                        <p:inputNumber id="qteArticles" value="#{selected.qteArticle}" title="#{bundle.EditEntreeTitle_qteArticle}" required="true" requiredMessage="#{bundle.EditEntreeRequiredMessage_qteArticle}"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditEntreeLabel_puTtcArticle}" for="puTtcArticles" />
+                    </p:column>
+                    <p:column>    
+                        <p:inputNumber id="puTtcArticles" value="#{selected.puTtcArticle}" title="#{bundle.EditEntreeTitle_puTtcArticle}" symbol="F CFA" symbolPosition="s" decimalSeparator="," thousandSeparator="." emptyValue="sign" 
+                                       decimalPlaces="3" required="true" requiredMessage="#{bundle.EditEntreeRequiredMessage_puTtcArticle}"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="#{bundle.EditEntreeLabel_numeroBl}" for="numeroBls" />
+                    </p:column>
+                    <p:column>
+                        <p:selectOneMenu id="numeroBls" value="#{selected.numeroBl}" required="true" requiredMessage="#{bundle.EditEntreeRequiredMessage_numeroBl}" disabled="true">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{livraisonController.itemsAvailableSelectOne}"
+                                           var="numeroBlItem"
+                                           itemValue="#{numeroBlItem}"/>
+                        </p:selectOneMenu>
+                    </p:column>
+                </p:dataTable>
+                <p:commandButton value="#{bundle.Save}" update="displays,:EntreeListForm:datalist,:growl" actionListener="#{entreeController.updateSelectedEntrees()}" oncomplete="PF('EntreesEditDialog').hide()" validateClient="true"/>
+                <p:commandButton actionListener="#{entreeController.cancel}" value="#{bundle.Cancel}" onclick="PF('EntreesEditDialog').hide()"/>
+            </h:form>        
+        </p:dialog>
+        
+    </ui:composition>
+</html>

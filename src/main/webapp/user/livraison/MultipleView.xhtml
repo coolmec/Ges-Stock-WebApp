@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="LivraisonsViewDlg" widgetVar="LivraisonsViewDialog" modal="true" closeOnEscape="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" header="#{bundle.ViewLivraisonTitle}" closable="true">
+            <p:ajax event="close" listener="#{livraisonController.setSelectedLivraisons(null)}" update=":LivraisonListForm:datalist"/>
+            <h:form id="LivraisonsViewForm">
+            <p:dataTable var="select" value="#{livraisonController.selectedLivraisons}" scrollable="true" resizableColumns="true">
+                <p:column headerText="#{bundle.ListLivraisonTitle_numeroBl}" width="50">
+                    <h:outputText value="#{select.numeroBl}"/>
+                </p:column>
+
+                <p:column headerText="#{bundle.ListLivraisonTitle_numeroFacture}" width="150" >
+                    <h:outputText value="#{select.numeroFacture}" />
+                </p:column>
+
+                <p:column headerText="#{bundle.ListLivraisonTitle_numeroBc}" width="150">
+                    <h:outputText value="#{select.numeroBc}" />
+                </p:column>
+
+                <p:column headerText="#{bundle.ListLivraisonTitle_dateLivraison}" width="70">
+                    <h:outputText value="#{select.dateLivraison}" />
+                </p:column>
+            </p:dataTable>
+            <p:commandButton value="#{bundle.Close}" onclick="PF('LivraisonsViewDialog').hide()" actionListener="#{livraisonController.cancel}"/>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

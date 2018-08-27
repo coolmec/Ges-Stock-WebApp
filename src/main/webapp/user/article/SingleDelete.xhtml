@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ArticleDeleteDlg" widgetVar="ArticleDeleteDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.DeleteArticleTitle}" closable="true">
+            <p:ajax event="close" listener="#{articleController.setSelectedArticles(null)}" update=":ArticleListForm:datalist"/>
+            <h:form id="ArticleDeleteForm">
+                <h:panelGroup >
+                    <p:panelGrid id="display" columns="2" rendered="#{!empty articleController.selectedArticles}">
+                        <p:outputLabel value="#{bundle.DeleteArticleLabel_articlePK_codeArticle}" for="articlePK_codeArticle" />
+                        <p:inputText id="articlePK_codeArticle" value="#{articleController.selectedArticles.get(0).articlePK.codeArticle}" title="#{bundle.DeleteArticleTitle_articlePK_codeArticle}" required="true" requiredMessage="#{bundle.DeleteArticleRequiredMessage_articlePK_codeArticle}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteArticleLabel_nomArticle}" for="nomArticle" />
+                        <p:inputText id="nomArticle" value="#{articleController.selectedArticles.get(0).nomArticle}" title="#{bundle.DeleteArticleTitle_nomArticle}" required="true" requiredMessage="#{bundle.DeleteArticleRequiredMessage_nomArticle}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteArticleLabel_descriptionArticle}" for="descriptionArticle" />
+                        <p:inputTextarea rows="4" cols="30" id="descriptionArticle" value="#{articleController.selectedArticles.get(0).descriptionArticle}" title="#{bundle.DeleteArticleTitle_descriptionArticle}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteArticleLabel_qteEnStock}" for="qteEnStock" />
+                        <p:inputNumber id="qteEnStock" value="#{articleController.selectedArticles.get(0).qteEnStock}" title="#{bundle.DeleteArticleTitle_qteEnStock}" required="true" requiredMessage="#{bundle.DeleteArticleRequiredMessage_qteEnStock}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteArticleLabel_puTtcNormal}" for="puTtcNormal" />
+                        <p:inputNumber id="puTtcNormal" value="#{articleController.selectedArticles.get(0).puTtcNormal}" title="#{bundle.DeleteArticleTitle_puTtcNormal}" symbol="F CFA" symbolPosition="s" decimalSeparator="," thousandSeparator="." emptyValue="sign" decimalPlaces="3" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteArticleLabel_dernierPuTtc}" for="dernierPuTtc" />
+                        <p:inputNumber id="dernierPuTtc" value="#{articleController.selectedArticles.get(0).dernierPuTtc}" title="#{bundle.DeleteArticleTitle_dernierPuTtc}" symbol="F CFA" symbolPosition="s" decimalSeparator="," thousandSeparator="." emptyValue="sign" decimalPlaces="3" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteArticleLabel_famille}" for="famille" />
+                        <p:selectOneMenu id="famille" value="#{articleController.selectedArticles.get(0).famille}" required="true" requiredMessage="#{bundle.EditArticleRequiredMessage_famille}" disabled="true">
+                            <f:selectItems value="#{familleController.itemsAvailableSelectOne}"
+                                           var="familleItem"
+                                           itemValue="#{familleItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{articleController.destroySelectedArticle}" value="#{bundle.Delete}" update=":growl,display,:ArticleListForm:datalist" oncomplete="PF('ArticleDeleteDialog').hide()">
+                        <p:confirm header="Confirmation" message="#{bundle.DeleteArticleConfirmationTitle}" icon="ui-icon-alert" />
+                    </p:commandButton>
+                    <p:commandButton actionListener="#{articleController.cancel}" value="#{bundle.Cancel}" oncomplete="PF('ArticleDeleteDialog').hide()" />
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

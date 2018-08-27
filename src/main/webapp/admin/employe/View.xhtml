@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmployeViewDlg" widgetVar="EmployeViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewEmployeTitle}" closable="false">
+            <h:form id="EmployeViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{employeController.selected != null}">
+                        <h:outputText value="#{bundle.ViewEmployeLabel_matriculeEmploye}"/>
+                        <h:outputText value="#{employeController.selected.matriculeEmploye}" title="#{bundle.ViewEmployeTitle_matriculeEmploye}"/>
+                        <h:outputText value="#{bundle.ViewEmployeLabel_nomEmploye}"/>
+                        <h:outputText value="#{employeController.selected.nomEmploye}" title="#{bundle.ViewEmployeTitle_nomEmploye}"/>
+                        <h:outputText value="#{bundle.ViewEmployeLabel_prenomEmploye}"/>
+                        <h:outputText value="#{employeController.selected.prenomEmploye}" title="#{bundle.ViewEmployeTitle_prenomEmploye}"/>
+                        <h:outputText value="#{bundle.ViewEmployeLabel_adresseEmploye}"/>
+                        <h:outputText value="#{employeController.selected.adresseEmploye}" title="#{bundle.ViewEmployeTitle_adresseEmploye}"/>
+                        <h:outputText value="#{bundle.ViewEmployeLabel_telephone1Employe}"/>
+                        <h:outputText value="#{employeController.selected.telephone1Employe}" title="#{bundle.ViewEmployeTitle_telephone1Employe}"/>
+                        <h:outputText value="#{bundle.ViewEmployeLabel_telephone2Employe}"/>
+                        <h:outputText value="#{employeController.selected.telephone2Employe}" title="#{bundle.ViewEmployeTitle_telephone2Employe}"/>
+                        <h:outputText value="#{bundle.ViewEmployeLabel_commentaires}"/>
+                        <h:outputText value="#{employeController.selected.commentaires}" title="#{bundle.ViewEmployeTitle_commentaires}"/>
+                        <h:outputText value="#{bundle.ViewEmployeLabel_departementEmploye}"/>
+                        <h:outputText value="#{employeController.selected.departementEmploye.nomDepartement}" title="#{bundle.ViewEmployeTitle_departementEmploye}"/>
+                        <h:outputText value="#{bundle.ViewEmployeLabel_posteEmploye}"/>
+                        <h:outputText value="#{employeController.selected.posteEmploye.nomPoste}" title="#{bundle.ViewEmployeTitle_posteEmploye}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="EmployeViewDialog.hide()" actionListener="#{employeController.cancel}"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

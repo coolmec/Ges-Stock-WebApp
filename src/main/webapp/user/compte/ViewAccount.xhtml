@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AccountViewDlg" widgetVar="AccountViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.MonCompte}" closable="true">
+            <h:form id="AccountViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{connexionController.connected}">
+                        <h:outputText value="#{bundle.ViewUtilisateurLabel_idUtilisateur}"/>
+                        <h:outputText value="#{connexionController.utilisateur.idUtilisateur}" title="#{bundle.ViewUtilisateurTitle_idUtilisateur}"/>
+                        <h:outputText value="#{bundle.ViewUtilisateurLabel_login}"/>
+                        <h:outputText value="#{connexionController.utilisateur.login}" title="#{bundle.ViewUtilisateurTitle_login}"/>
+                        <h:outputText value="#{bundle.ViewUtilisateurLabel_libellePrivilege}"/>
+                        <h:outputText value="#{connexionController.utilisateur.codePrivilegeUtilisateur.libellePrivilege}" title="#{bundle.ViewUtilisateurTitle_libellePrivilege}"/>
+                        <h:outputText value="#{bundle.ViewUtilisateurLabel_nomEmploye}"/>
+                        <h:outputText value="#{connexionController.utilisateur.matriculeEmploye.nomEmploye}" title="#{bundle.ViewUtilisateurTitle_nomEmploye}"/>
+                        <h:outputText value="#{bundle.ViewUtilisateurLabel_prenomEmploye}"/>
+                        <h:outputText value="#{connexionController.utilisateur.matriculeEmploye.prenomEmploye}" title="#{bundle.ViewUtilisateurTitle_prenomEmploye}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PF('AccountViewDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

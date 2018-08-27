@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ArticleEditDlg" widgetVar="ArticleEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditArticleTitle}" closable="true">
+            <p:ajax event="close" listener="#{articleController.setSelectedArticles(null)}" update=":ArticleListForm:datalist"/>
+            <h:form id="ArticleEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{!empty articleController.selectedArticles}">
+                        <p:outputLabel value="#{bundle.EditArticleLabel_articlePK_codeArticle}" for="articlePK_codeArticle" />
+                        <p:inputText id="articlePK_codeArticle" value="#{articleController.selectedArticles.get(0).articlePK.codeArticle}" title="#{bundle.EditArticleTitle_articlePK_codeArticle}" required="true" requiredMessage="#{bundle.EditArticleRequiredMessage_articlePK_codeArticle}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.EditArticleLabel_nomArticle}" for="nomArticle" />
+                        <p:inputText id="nomArticle" value="#{articleController.selectedArticles.get(0).nomArticle}" title="#{bundle.EditArticleTitle_nomArticle}" required="true" requiredMessage="#{bundle.EditArticleRequiredMessage_nomArticle}"/>
+                        <p:outputLabel value="#{bundle.EditArticleLabel_descriptionArticle}" for="descriptionArticle" />
+                        <p:inputTextarea rows="4" cols="30" id="descriptionArticle" value="#{articleController.selectedArticles.get(0).descriptionArticle}" title="#{bundle.EditArticleTitle_descriptionArticle}" />
+                        <p:outputLabel value="#{bundle.EditArticleLabel_qteEnStock}" for="qteEnStock" />
+                        <p:inputNumber id="qteEnStock" value="#{articleController.selectedArticles.get(0).qteEnStock}" title="#{bundle.EditArticleTitle_qteEnStock}" required="true" requiredMessage="#{bundle.EditArticleRequiredMessage_qteEnStock}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.EditArticleLabel_puTtcNormal}" for="puTtcNormal" />
+                        <p:inputNumber id="puTtcNormal" value="#{articleController.selectedArticles.get(0).puTtcNormal}" title="#{bundle.EditArticleTitle_puTtcNormal}" symbol="F CFA" symbolPosition="s" decimalSeparator="," thousandSeparator="." emptyValue="sign" decimalPlaces="3"/>
+                        <p:outputLabel value="#{bundle.EditArticleLabel_dernierPuTtc}" for="dernierPuTtc" />
+                        <p:inputNumber id="dernierPuTtc" value="#{articleController.selectedArticles.get(0).dernierPuTtc}" title="#{bundle.EditArticleTitle_dernierPuTtc}" symbol="F CFA" symbolPosition="s" decimalSeparator="," thousandSeparator="." emptyValue="sign" decimalPlaces="3" disabled="true"/>
+                        <p:outputLabel value="#{bundle.EditArticleLabel_famille}" for="famille" />
+                        <p:selectOneMenu id="famille" value="#{articleController.selectedArticles.get(0).famille}" required="true" requiredMessage="#{bundle.EditArticleRequiredMessage_famille}" disabled="true">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{familleController.itemsAvailableSelectOne}"
+                                           var="familleItem"
+                                           itemValue="#{familleItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{articleController.updateSelectedArticle()}" value="#{bundle.Save}" update="ArticleEditDlg,:ArticleListForm:datalist,:growl" oncomplete="PF('ArticleEditDialog').hide()"/>
+                    <p:commandButton actionListener="#{articleController.cancel}" value="#{bundle.Cancel}" oncomplete="PF('ArticleEditDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UtilisateurCreateDlg" widgetVar="UtilisateurCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateUtilisateurTitle}" closable="true">
+            <p:ajax event="close" listener="#{utilisateurController.setTocreate(null)}" update=":UtilisateurListForm:datalist"/>
+            <h:form id="UtilisateurCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{utilisateurController.tocreate != null}">
+                        <p:outputLabel value="#{bundle.CreateUtilisateurLabel_idUtilisateur}" for="idUtilisateur" />
+                        <p:inputText id="idUtilisateur" value="#{utilisateurController.tocreate.idUtilisateur}" title="#{bundle.CreateUtilisateurTitle_idUtilisateur}" required="true" requiredMessage="#{bundle.CreateUtilisateurRequiredMessage_idUtilisateur}" placeholder="#{bundle.CreateUtilisateurPlaceholder_idUtilisateur}"/>
+                        <p:outputLabel value="#{bundle.CreateUtilisateurLabel_login}" for="login" />
+                        <p:inputText id="login" value="#{utilisateurController.tocreate.login}" title="#{bundle.CreateUtilisateurTitle_login}" required="true" requiredMessage="#{bundle.CreateUtilisateurRequiredMessage_login}" placeholder="#{bundle.CreateUtilisateurPlaceholder_login}"/>
+                        <p:outputLabel value="#{bundle.CreateUtilisateurLabel_password}" for="password1" />
+                        <p:password id="password1" value="#{utilisateurController.tocreate.password}"  match="password2" validatorMessage="#{bundle.ConnexionPasswordConfirmationMessage}" title="#{bundle.CreateUtilisateurTitle_password}" feedback="true" inline="true" goodLabel="#{bundle.ConnexionGoodLabel}" weakLabel="#{bundle.ConnexionWeakLabel}" 
+                                    strongLabel="#{bundle.ConnexionStrongLabel}" promptLabel="#{bundle.ConnexionPasswordPromptLabel}" required="true" requiredMessage="#{bundle.CreateUtilisateurRequiredMessage_password}">
+                            <f:validateLength minimum="6" ></f:validateLength>
+                        </p:password>
+                        <p:outputLabel value="#{bundle.CreateUtilisateurLabel_passwordConfirmation}" for="password2" />
+                        <p:password id="password2" value="#{utilisateurController.tocreate.password}" title="#{bundle.CreateUtilisateurTitle_passwordConfirmation}" feedback="true" inline="true" goodLabel="#{bundle.ConnexionGoodLabel}" weakLabel="#{bundle.ConnexionWeakLabel}" strongLabel="#{bundle.ConnexionStrongLabel}" promptLabel="#{bundle.ConnexionPasswordPromptLabel}" 
+                                    required="true" requiredMessage="#{bundle.CreateUtilisateurRequiredMessage_passwordConfirmation}" validatorMessage="#{bundle.ConnexionPasswordValidationMessage}">
+                            <f:validateLength minimum="6" ></f:validateLength>
+                        </p:password>
+                        <p:outputLabel value="#{bundle.CreateUtilisateurLabel_libellePrivilege}" for="codePrivilegeUtilisateur" />
+                        <p:selectOneMenu id="codePrivilegeUtilisateur" value="#{utilisateurController.tocreate.codePrivilegeUtilisateur}" title="#{bundle.CreateUtilisateurTitle_libellePrivilege}" required="true" requiredMessage="#{bundle.EditUtilisateurRequiredMessage_codePrivilegeUtilisateur}">
+                            <f:selectItems value="#{privilegeController.itemsAvailableSelectOne}"
+                                           var="codePrivilegeUtilisateurItem"
+                                           itemValue="#{codePrivilegeUtilisateurItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateUtilisateurLabel_matriculeEmploye}" for="matriculeEmploye" />
+                        <p:selectOneMenu id="matriculeEmploye" value="#{utilisateurController.tocreate.matriculeEmploye}" title="#{bundle.CreateUtilisateurTitle_matriculeEmploye}" required="true" requiredMessage="#{bundle.EditUtilisateurRequiredMessage_matriculeEmploye}">
+                            <f:selectItems value="#{employeController.itemsAvailableSelectOne}"
+                                           var="matriculeEmployeItem"
+                                           itemValue="#{matriculeEmployeItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{utilisateurController.create}" value="#{bundle.Save}" update="display,:UtilisateurListForm:datalist,:growl" oncomplete="PF('UtilisateurCreateDialog').hide()" validateClient="true"/>
+                    <p:commandButton actionListener="#{utilisateurController.cancel}" value="#{bundle.Cancel}" onclick="PF('UtilisateurCreateDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

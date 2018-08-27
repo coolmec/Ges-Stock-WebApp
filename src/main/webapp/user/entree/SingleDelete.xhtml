@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EntreeDeleteDlg" widgetVar="EntreeDeleteDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.DeleteEntreeTitle}" closable="true">
+            <p:ajax event="close" listener="#{entreeController.setSelectedEntrees(null)}" update=":EntreeListForm:datalist"/>
+            <h:form id="EntreeDeleteForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{entreeController.selectedEntrees != null}">
+                        <p:outputLabel value="#{bundle.DeleteEntreeLabel_idEntree}" for="idEntree" />
+                        <p:inputText id="idEntree" value="#{entreeController.selectedEntrees.get(0).idEntree}" title="#{bundle.DeleteEntreeTitle_idEntree}" required="true" requiredMessage="#{bundle.DeleteEntreeRequiredMessage_idEntree}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteEntreeLabel_article}" for="article" />
+                        <p:selectOneMenu id="article" value="#{entreeController.selectedEntrees.get(0).article}" title="#{bundle.DeleteEntreeTitle_article}" required="true" requiredMessage="#{bundle.EditEntreeRequiredMessage_article}" disabled="true">
+                            <f:selectItems value="#{articleController.itemsAvailableSelectOne}"
+                                           var="articleItem"
+                                           itemValue="#{articleItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.DeleteEntreeLabel_qteArticle}" for="qteArticle" />
+                        <p:inputNumber id="qteArticle" value="#{entreeController.selectedEntrees.get(0).qteArticle}" title="#{bundle.DeleteEntreeTitle_qteArticle}" required="true" requiredMessage="#{bundle.DeleteEntreeRequiredMessage_qteArticle}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteEntreeLabel_puTtcArticle}" for="puTtcArticle" />
+                        <p:inputNumber id="puTtcArticle" value="#{entreeController.selectedEntrees.get(0).puTtcArticle}" title="#{bundle.DeleteEntreeTitle_puTtcArticle}" symbol="F CFA" symbolPosition="s" decimalSeparator="," thousandSeparator="." emptyValue="sign" decimalPlaces="3" required="true" requiredMessage="#{bundle.DeleteEntreeRequiredMessage_puTtcArticle}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteEntreeLabel_numeroBl}" for="numeroBl" />
+                        <p:selectOneMenu id="numeroBl" value="#{entreeController.selectedEntrees.get(0).numeroBl}" title="#{bundle.DeleteEntreeTitle_numeroBl}" required="true" requiredMessage="#{bundle.EditEntreeRequiredMessage_numeroBl}" disabled="true">
+                            <f:selectItems value="#{livraisonController.itemsAvailableSelectOne}"
+                                           var="numeroBlItem"
+                                           itemValue="#{numeroBlItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Delete}" actionListener="#{entreeController.destroySelectedEntree()}" update="display,:EntreeListForm:datalist,:growl" oncomplete="PF('EntreeDeleteDialog').hide()">
+                        <p:confirm header="Confirmation" message="#{bundle.DeleteEntreeConfirmationTitle}" icon="ui-icon-alert" />
+                    </p:commandButton>
+                    <p:commandButton actionListener="#{entreeController.cancel}" value="#{bundle.Cancel}" onclick="PF('EntreeDeleteDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

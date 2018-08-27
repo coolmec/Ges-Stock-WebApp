@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListDepartementTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            
+            <ui:include src="Growl.xhtml"/>            
+            
+            <h:form id="DepartementListForm">
+                
+                <p:panel header="#{bundle.ListDepartementTitle}">
+                    <p:dataTable id="datalist" value="#{departementController.items}" var="item"
+                                 selectionMode="single"
+                                 selection="#{departementController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.codeDepartement}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 widgetVar="departementsTable"
+                                 emptyMessage="#{bundle.ListDepartementEmpty}"
+                                 filteredValue="#{departementController.filteredItems}"
+                                 sortMode="single"
+                                 draggableColumns="true"
+                                 >
+
+                        <p:ajax event="rowSelect" update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+                        
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="#{bundle.AllSearch}" />
+                                <p:inputText id="globalFilter" onkeyup="PF('departementsTable').filter()" style="width:150px" placeholder="#{bundle.SearchKeyword}"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column filterBy="#{item.codeDepartement}" filterMatchMode="contains" sortBy="#{item.codeDepartement}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDepartementTitle_codeDepartement}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codeDepartement}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.nomDepartement}" filterMatchMode="contains" sortBy="#{item.nomDepartement}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDepartementTitle_nomDepartement}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nomDepartement}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.descriptionDepartement}" filterMatchMode="contains" sortBy="#{item.descriptionDepartement}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDepartementTitle_descriptionDepartement}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descriptionDepartement}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" update=":DepartementCreateForm" oncomplete="PF('DepartementCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}"   update=":DepartementViewForm"   oncomplete="PF('DepartementViewDialog').show()" disabled="#{empty departementController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}"   update=":DepartementEditForm"   oncomplete="PF('DepartementEditDialog').show()" disabled="#{empty departementController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" update=":DepartementDeleteForm" oncomplete="PF('DepartementDeleteDialog').show()" disabled="#{empty departementController.selected}"
+                                             rendered="#{connexionController.render}"/>
+                            <p:commandButton id="refreshButton"  widgetVar="refreshButton" icon="ui-icon-refresh"  value="#{bundle.Refresh}" update="DepartementListForm" action="Index.xhtml"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="View.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="Delete.xhtml"/>
+            
+            <h:form>                            
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                    <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                </p:confirmDialog>                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

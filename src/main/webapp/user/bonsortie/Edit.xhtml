@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BonsortieEditDlg" widgetVar="BonsortieEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditBonsortieTitle}" closable="false">
+            <h:form id="BonsortieEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{bonsortieController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditBonsortieLabel_numeroBonSortie}" for="numeroBonSortie" />
+                        <p:inputText id="numeroBonSortie" value="#{bonsortieController.selected.numeroBonSortie}" title="#{bundle.EditBonsortieTitle_numeroBonSortie}" required="true" requiredMessage="#{bundle.EditBonsortieRequiredMessage_numeroBonSortie}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.EditBonsortieLabel_dateSortie}" for="dateSortie" />
+                        <p:calendar id="dateSortie" pattern="MM/dd/yyyy HH:mm:ss" value="#{bonsortieController.selected.dateSortie}" title="#{bundle.EditBonsortieTitle_dateSortie}" required="true" requiredMessage="#{bundle.EditBonsortieRequiredMessage_dateSortie}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditBonsortieLabel_codeDepartement}" for="codeDepartement" />
+                        <p:selectOneMenu id="codeDepartement" value="#{bonsortieController.selected.codeDepartement}" required="true" requiredMessage="#{bundle.EditBonsortieRequiredMessage_codeDepartement}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{departementController.itemsAvailableSelectOne}"
+                                           var="codeDepartementItem"
+                                           itemValue="#{codeDepartementItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditBonsortieLabel_matriculeEmploye}" for="matriculeEmploye" />
+                        <p:selectOneMenu id="matriculeEmploye" value="#{bonsortieController.selected.matriculeEmploye}" required="true" requiredMessage="#{bundle.EditBonsortieRequiredMessage_matriculeEmploye}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{employeController.itemsAvailableSelectOne}"
+                                           var="matriculeEmployeItem"
+                                           itemValue="#{matriculeEmployeItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{bonsortieController.update}" value="#{bundle.Save}" update="display,:BonsortieListForm:datalist,:growl" oncomplete="handleSubmit(args, 'BonsortieEditDialog');" validateClient="true" onclick="BonsortieEditDialog.hide()"/>
+                    <p:commandButton actionListener="#{bonsortieController.cancel}" value="#{bundle.Cancel}" onclick="BonsortieEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

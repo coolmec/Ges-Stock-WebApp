@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PosteEditDlg" widgetVar="PosteEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditPosteTitle}" closable="true">
+            <p:ajax event="close" listener="#{posteController.setSelected(null)}" update=":PosteListForm:datalist"/>
+            <h:form id="PosteEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{posteController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditPosteLabel_codePoste}" for="codePoste" />
+                        <p:inputText id="codePoste" value="#{posteController.selected.codePoste}" title="#{bundle.EditPosteTitle_codePoste}" required="true" requiredMessage="#{bundle.EditPosteRequiredMessage_codePoste}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.EditPosteLabel_nomPoste}" for="nomPoste" />
+                        <p:inputText id="nomPoste" value="#{posteController.selected.nomPoste}" title="#{bundle.EditPosteTitle_nomPoste}" required="true" requiredMessage="#{bundle.EditPosteRequiredMessage_nomPoste}"/>
+                        <p:outputLabel value="#{bundle.EditPosteLabel_descriptionPoste}" for="descriptionPoste" />
+                        <p:inputTextarea rows="4" cols="30" id="descriptionPoste" value="#{posteController.selected.descriptionPoste}" title="#{bundle.EditPosteTitle_descriptionPoste}" required="true" requiredMessage="#{bundle.EditPosteRequiredMessage_descriptionPoste}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{posteController.update}" value="#{bundle.Save}" update=":growl,display,:PosteListForm:datalist" oncomplete="PF('PosteEditDialog').hide()" validateClient="true"/>
+                    <p:commandButton actionListener="#{posteController.cancel}" value="#{bundle.Cancel}" onclick="PF('PosteEditDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

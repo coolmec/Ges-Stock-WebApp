@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListArticleTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            
+            <ui:include src="Growl.xhtml"/>
+            
+            <h:form id="ArticleListForm">
+                
+                <p:panel header="#{bundle.ListArticleTitle}">
+                    <p:dataTable id="datalist" value="#{articleController.items}" var="item"
+                                 selection="#{articleController.selectedArticles}"
+                                 paginator="true"
+                                 rowKey="#{item.articlePK}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,15,20,30,40,50"
+                                 widgetVar="articlesTable"
+                                 emptyMessage="#{bundle.ListArticleEmpty}"
+                                 filteredValue="#{articleController.filteredItems}"
+                                 sortMode="multiple"
+                                 draggableColumns="true"                                 
+                                 >
+
+                        <p:ajax event="rowSelect" listener="#{articleController.onRowUnselect}" update="viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" listener="#{articleController.onRowUnselect}" update="viewButton editButton deleteButton"/>
+                        
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="#{bundle.AllSearch}" />
+                                <p:inputText id="globalFilter" onkeyup="PF('articlesTable').filter()" style="width:150px" placeholder="#{bundle.SearchKeyword}"/>
+                                <p:commandButton id="toggler" type="button" value="Columns" icon="ui-icon-calculator" />
+                                <p:columnToggler datasource="datalist" trigger="toggler" />
+                            </p:outputPanel>
+                        </f:facet>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+                        <p:column filterBy="#{item.articlePK.codeArticle}" filterMatchMode="contains" sortBy="#{item.articlePK.codeArticle}" filterValue="#{articleController.filterValue.code}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArticleTitle_articlePK_codeArticle}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.articlePK.codeArticle}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.nomArticle}" filterMatchMode="contains" sortBy="#{item.nomArticle}" filterValue="#{articleController.filterValue.nom}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArticleTitle_nomArticle}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nomArticle}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.descriptionArticle}" filterMatchMode="contains" sortBy="#{item.descriptionArticle}" filterValue="#{articleController.filterValue.description}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArticleTitle_descriptionArticle}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descriptionArticle}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.qteEnStock}" filterMatchMode="contains" sortBy="#{item.qteEnStock}" filterValue="#{articleController.filterValue.qteEnStock}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArticleTitle_qteEnStock}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.qteEnStock}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.puTtcNormal}" filterMatchMode="contains" sortBy="#{item.puTtcNormal}" filterValue="#{articleController.filterValue.puTtcNormal}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArticleTitle_puTtcNormal}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.puTtcNormal}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.dernierPuTtc}" filterMatchMode="contains" sortBy="#{item.dernierPuTtc}" filterValue="#{articleController.filterValue.dernierPuTtc}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArticleTitle_dernierPuTtc}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.dernierPuTtc}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.famille.nomFamille}" filterMatchMode="contains" sortBy="#{item.famille.nomFamille}" filterValue="#{articleController.filterValue.famille}">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListArticleTitle_famille}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.famille.nomFamille}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton"  icon="ui-icon-plus"   value="#{bundle.Create}"  update=":ArticleCreateForm"  oncomplete="PF('ArticleCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"    widgetVar="viewButton"   icon="ui-icon-search" value="#{bundle.View}"   update=":ArticlesViewForm,:ArticleViewForm,viewButton"       oncomplete="PF('#{articleController.viewLink()}').show()"   />
+                            <p:commandButton id="editButton"    widgetVar="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}"   update=":ArticlesEditForm,:ArticleEditForm,editButton"       oncomplete="PF('#{articleController.editLink()}').show()"   />
+                            <p:commandButton id="deleteButton"  widgetVar="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" update=":ArticlesDeleteForm,:ArticleDeleteForm,deleteButton" oncomplete="PF('#{articleController.deleteLink()}').show()"
+                                             rendered="#{connexionController.render}"/>
+                            <p:commandButton id="refreshButton"  widgetVar="refreshButton" icon="ui-icon-refresh"  value="#{bundle.Refresh}" update="ArticleListForm" action="Index.xhtml"/>
+                            <p:commandButton id="printButton" widgetVar="printButton" icon="ui-icon-print" value="#{bundle.Print}" type="button" >
+                                <p:printer target="datalist" />
+                            </p:commandButton>
+                        </f:facet>
+                    </p:dataTable>
+                    <h3>Exporter tous les articles</h3>
+                    <h:commandLink>
+                        <p:graphicImage library="images" name="excel.png" />
+                        <p:dataExporter type="xls" target="datalist" fileName="#{bundle.FilenameArticle}" pageOnly="false"/>
+                    </h:commandLink>
+
+                    <h:commandLink>
+                        <p:graphicImage library="images" name="pdf.png" />
+                        <p:dataExporter type="pdf" target="datalist" fileName="#{bundle.FilenameArticle}" pageOnly="false" />
+                    </h:commandLink>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="/user/article/Create.xhtml"/>
+            <ui:include src="/user/article/SingleView.xhtml"/>
+            <ui:include src="/user/article/MultipleView.xhtml"/>
+            <ui:include src="/user/article/SingleEdit.xhtml"/>
+            <ui:include src="/user/article/MultipleEdit.xhtml"/>
+            <ui:include src="/user/article/SingleDelete.xhtml"/>
+            <ui:include src="/user/article/MultipleDelete.xhtml"/>
+            
+            <h:form>                            
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+                    <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+                </p:confirmDialog>                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+    
+</html>

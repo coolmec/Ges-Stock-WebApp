@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UtilisateurDeleteDlg" widgetVar="UtilisateurDeleteDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.DeleteUtilisateurTitle}" closable="true">
+            <p:ajax event="close" listener="#{utilisateurController.setSelected(null)}" update=":UtilisateurListForm:datalist"/>
+            <h:form id="UtilisateurDeleteForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{utilisateurController.selected != null}">
+                        <p:outputLabel value="#{bundle.DeleteUtilisateurLabel_idUtilisateur}" for="idUtilisateur" />
+                        <p:inputText id="idUtilisateur" value="#{utilisateurController.selected.idUtilisateur}" title="#{bundle.DeleteUtilisateurTitle_idUtilisateur}" required="true" requiredMessage="#{bundle.DeleteUtilisateurRequiredMessage_idUtilisateur}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteUtilisateurLabel_login}" for="login" />
+                        <p:inputText id="login" value="#{utilisateurController.selected.login}" title="#{bundle.DeleteUtilisateurTitle_login}" required="true" requiredMessage="#{bundle.DeleteUtilisateurRequiredMessage_login}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteUtilisateurLabel_libellePrivilege}" for="codePrivilegeUtilisateur" />
+                        <p:selectOneMenu id="codePrivilegeUtilisateur" value="#{utilisateurController.selected.codePrivilegeUtilisateur}" title="#{bundle.DeleteUtilisateurTitle_libellePrivilege}" required="true" requiredMessage="#{bundle.EditUtilisateurRequiredMessage_codePrivilegeUtilisateur}" disabled="true">
+                            <f:selectItems value="#{privilegeController.itemsAvailableSelectOne}"
+                                           var="codePrivilegeUtilisateurItem"
+                                           itemValue="#{codePrivilegeUtilisateurItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.DeleteUtilisateurLabel_matriculeEmploye}" for="matriculeEmploye" />
+                        <p:selectOneMenu id="matriculeEmploye" value="#{utilisateurController.selected.matriculeEmploye}" title="#{bundle.DeleteUtilisateurTitle_matriculeEmploye}" required="true" requiredMessage="#{bundle.EditUtilisateurRequiredMessage_matriculeEmploye}" disabled="true">
+                            <f:selectItems value="#{employeController.itemsAvailableSelectOne}"
+                                           var="matriculeEmployeItem"
+                                           itemValue="#{matriculeEmployeItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{utilisateurController.destroy}" value="#{bundle.Delete}" oncomplete="PF('UtilisateurDeleteDialog').hide()" update=":growl,display,:UtilisateurListForm:datalist">
+                        <p:confirm header="Confirmation" message="#{bundle.DeleteUtilisateurConfirmationTitle}" icon="ui-icon-alert" />
+                    </p:commandButton>
+                    <p:commandButton actionListener="#{utilisateurController.cancel}" value="#{bundle.Cancel}" onclick="PF('UtilisateurDeleteDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

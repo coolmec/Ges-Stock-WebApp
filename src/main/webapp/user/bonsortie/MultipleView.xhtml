@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BonSortiesViewDlg" widgetVar="BonSortiesViewDialog" modal="true" closeOnEscape="true" appendTo="@(body)" showEffect="fade" hideEffect="fade" header="#{bundle.ViewBonsortieTitle}" closable="true">
+            <p:ajax event="close" listener="#{bonsortieController.setSelectedBonSorties(null)}" update=":BonSortieListForm:datalist"/>
+            <h:form id="BonSortiesViewForm">
+            <p:dataTable var="select" value="#{bonsortieController.selectedBonSorties}" scrollable="true" resizableColumns="true">
+                <p:column headerText="#{bundle.ListBonsortieTitle_numeroBonSortie}" width="50">
+                    <h:outputText value="#{select.numeroBonSortie}"/>
+                </p:column>
+
+                <p:column headerText="#{bundle.ListBonsortieTitle_dateSortie}" width="150" >
+                    <h:outputText value="#{select.dateSortie}" />
+                </p:column>
+
+                <p:column headerText="#{bundle.ListBonsortieTitle_codeDepartement}" width="150">
+                    <h:outputText value="#{select.codeDepartement}" />
+                </p:column>
+
+                <p:column headerText="#{bundle.ListBonsortieTitle_nomEmploye}" width="70">
+                    <h:outputText value="#{select.matriculeEmploye.nomEmploye}" />
+                </p:column>
+                <p:column headerText="#{bundle.ListBonsortieTitle_prenomEmploye}" width="70">
+                    <h:outputText value="#{select.matriculeEmploye.prenomEmploye}" />
+                </p:column>
+            </p:dataTable>
+            <p:commandButton value="#{bundle.Close}" onclick="PF('BonSortiesViewDialog').hide()" actionListener="#{bonsortieController.cancel}"/>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <title>#{bundle.IndexTitle}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+    </h:head>
+
+    <h:body>
+
+        <p:layout fullPage="true" collapseTitle="#{bundle.IndexCollapseTitle}" expandTitle="#{bundle.IndexExpandTitle}" closeTitle="#{bundle.IndexCloseTitle}" widgetVar="LayoutAccueil">
+
+            <p:layoutUnit position="north" collapsible="true" collapsed="false" resizable="true" header="#{bundle.IndexHeader}" closable="true" size="100">
+                <h:form>
+                    <p:menubar>
+
+                        <p:submenu label="MENU">
+                            <p:menuitem value="Accueil" url="#{bundle.LinkAccueil}"/>
+                            <p:menuitem value="Familles d'articles" url="#{bundle.LinkFamille}"/>
+                            <p:menuitem value="Articles" url="#{bundle.LinkArticle}"/>
+                            <p:menuitem value="Bons de livraison" url="#{bundle.LinkLivraison}"/>
+                            <p:menuitem value="Bons de sortie" url="#{bundle.LinkBonsortie}"/>
+                            <p:menuitem value="Entrées de stock" url="#{bundle.LinkEntree}"/>
+                            <p:menuitem value="Sorties de stock" url="#{bundle.LinkSortie}"/>
+                            <p:menuitem value="Postes" url="#{bundle.LinkPoste}"/>
+                            <p:menuitem value="Départements" url="#{bundle.LinkDepartement}"/>
+                            <p:menuitem value="Employés" url="#{bundle.LinkEmploye}"/>
+                            <p:menuitem value="Privilèges" url="#{bundle.LinkPrivilege}"/>
+                            <p:menuitem value="Utilisateurs" url="#{bundle.LinkUtilisateur}"/>
+                            <p:menuitem value="Importer" url="#{bundle.LinkImporter}"/>
+                            <p:menuitem value="Mon compte" url="#{bundle.LinkCompte}"/>
+                            <p:menuitem value="Déconnexion" url="#{bundle.LinkDeconnexion}"/>
+                        </p:submenu>
+                        <p:submenu label="AIDE">
+                            <p:menuitem value="Manuel d'utilisateur" url="#{bundle.LinkManuel}"/>
+                            <p:menuitem value="Raccourcis clavier" url="#{bundle.LinkRaccourcies}"/>
+                            <p:menuitem value="Mises à jour" url="#{bundle.LinkUpdates}"/>
+                            <p:menuitem value="A propos de" url="#{bundle.LinkApropos}"/>
+                        </p:submenu>
+
+                    </p:menubar>
+                </h:form>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="west" collapsible="true" collapsed="true" resizable="true" size="200">
+                <h:outputText>LEFT</h:outputText>
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="center" id="LayoutUnitCenter">
+                <ui:include  src="#{bundle.AdminConnect}"/>
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="east" collapsible="true" collapsed="true" resizable="true" size="200">
+                <h:outputText>RIGHT</h:outputText>
+            </p:layoutUnit>
+            
+            <p:layoutUnit position="south" collapsible="true" collapsed="true" resizable="true" size="100">
+                <h:outputText>BOTTOM</h:outputText>
+            </p:layoutUnit>
+            
+        </p:layout>
+        
+    </h:body>
+</html>
+

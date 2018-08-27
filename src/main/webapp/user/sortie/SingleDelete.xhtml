@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SortieDeleteDlg" widgetVar="SortieDeleteDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.DeleteSortieTitle}" closable="true">
+            <p:ajax event="close" listener="#{sortieController.setSelectedSorties(null)}" update=":SortieListForm:datalist"/>
+            <h:form id="SortieDeleteForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{sortieController.selectedSorties != null}">
+                        <p:outputLabel value="#{bundle.DeleteSortieLabel_idSortie}" for="idSortie" />
+                        <p:inputText id="idSortie" value="#{sortieController.selectedSorties.get(0).idSortie}" title="#{bundle.DeleteSortieTitle_idSortie}" required="true" requiredMessage="#{bundle.DeleteSortieRequiredMessage_idSortie}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteSortieLabel_qteArticle}" for="qteArticle" />
+                        <p:inputNumber id="qteArticle" value="#{sortieController.selectedSorties.get(0).qteArticle}" title="#{bundle.DeleteSortieTitle_qteArticle}" required="true" requiredMessage="#{bundle.DeleteSortieRequiredMessage_qteArticle}" disabled="true"/>
+                        <p:outputLabel value="#{bundle.DeleteSortieLabel_article}" for="article" />
+                        <p:selectOneMenu id="article" value="#{sortieController.selectedSorties.get(0).article}" title="#{bundle.DeleteSortieTitle_article}" required="true" requiredMessage="#{bundle.EditSortieRequiredMessage_article}" disabled="true">
+                            <f:selectItems value="#{articleController.itemsAvailableSelectOne}"
+                                           var="articleItem"
+                                           itemValue="#{articleItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.DeleteSortieLabel_numeroBonSortie}" for="numeroBonSortie" />
+                        <p:selectOneMenu id="numeroBonSortie" value="#{sortieController.selectedSorties.get(0).numeroBonSortie}" title="#{bundle.DeleteSortieTitle_numeroBonSortie}" required="true" requiredMessage="#{bundle.EditSortieRequiredMessage_numeroBonSortie}" disabled="true">
+                            <f:selectItems value="#{bonsortieController.itemsAvailableSelectOne}"
+                                           var="numeroBonSortieItem"
+                                           itemValue="#{numeroBonSortieItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Delete}" actionListener="#{sortieController.destroySelectedSortie()}" update="display,:SortieListForm:datalist,:growl" oncomplete="PF('SortieDeleteDialog').hide()">
+                        <p:confirm header="Confirmation" message="#{bundle.DeleteSortieConfirmationTitle}" icon="ui-icon-alert" />
+                    </p:commandButton>
+                    <p:commandButton actionListener="#{sortieController.cancel}" value="#{bundle.Cancel}" onclick="PF('SortieDeleteDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

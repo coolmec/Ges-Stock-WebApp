@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DepartementViewDlg" widgetVar="DepartementViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDepartementTitle}" closable="true">
+            <p:ajax event="close" listener="#{departementController.setSelected(null)}" update=":DepartementListForm:datalist"/>
+            <h:form id="DepartementViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{departementController.selected != null}">
+                        <h:outputText value="#{bundle.ViewDepartementLabel_codeDepartement}"/>
+                        <h:outputText value="#{departementController.selected.codeDepartement}" title="#{bundle.ViewDepartementTitle_codeDepartement}"/>
+                        <h:outputText value="#{bundle.ViewDepartementLabel_nomDepartement}"/>
+                        <h:outputText value="#{departementController.selected.nomDepartement}" title="#{bundle.ViewDepartementTitle_nomDepartement}"/>
+                        <h:outputText value="#{bundle.ViewDepartementLabel_descriptionDepartement}"/>
+                        <h:outputText value="#{departementController.selected.descriptionDepartement}" title="#{bundle.ViewDepartementTitle_descriptionDepartement}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PF('DepartementViewDialog').hide()" actionListener="#{departementController.cancel}"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

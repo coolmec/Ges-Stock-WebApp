@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListImportTitle}" style="display: block; width:400px; margin: auto;text-align: center"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            
+            <ui:include src="Growl.xhtml"/>
+            
+            <h:form id="ImportForm">
+                <p:panel style="width: 380px; margin: auto">
+                    <p:panelGrid columns="2" layout="grid">
+                        <p:outputLabel for="import" value="Sélectionner un type :" style="vertical-align: sub"/>
+                        <p:selectOneMenu id="import" value="#{importController.table}"  required="true" requiredMessage="#{bundle.ImportRequiredMessage}">
+                            <p:ajax event="itemSelect" listener="#{importController.enabled()}" update="importButton"/>
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}" itemValue=""/>
+                            <f:selectItems value="#{importController.tables}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton id="importButton" update="growl"  widgetVar="importButton" icon="ui-icon-arrowthickstop-1-s"  value="#{bundle.Import}" oncomplete="PF('#{importController.importDialog()}').show()" disabled="#{importController.disabled}"/>
+                </p:panel>
+            </h:form>
+            <ui:include src="ImportArticles.xhtml"/>
+            <ui:include src="ImportEntrees.xhtml"/>
+            <ui:include src="ImportLivraisons.xhtml"/>
+            <ui:include src="ImportEmployes.xhtml"/>
+            <ui:include src="ImportBonSorties.xhtml"/>
+            <ui:include src="ImportSorties.xhtml"/>
+        </ui:define>
+    </ui:composition>
+    
+</html>
