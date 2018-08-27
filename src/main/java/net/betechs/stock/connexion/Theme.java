@@ -5,13 +5,14 @@
  */
 package net.betechs.stock.connexion;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author JAFFAR
  */
-public class Theme {
+public class Theme implements Serializable {
 
     private int id;
 
