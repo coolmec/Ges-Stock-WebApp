@@ -22,8 +22,9 @@
                     </p:panelGrid>
                     <p:commandButton actionListener="#{departementController.create}" value="#{bundle.Save}" update="display,:DepartementListForm:datalist,:growl" oncomplete="PF('DepartementCreateDialog').hide()" validateClient="true"/>
                     <p:commandButton actionListener="#{departementController.cancel}" value="#{bundle.Cancel}" onclick="PF('DepartementCreateDialog').hide()" />
-                </h:panelGroup>
+                </h:panelGroup>                
             </h:form>
+            
         </p:dialog>
 
     </ui:composition>
