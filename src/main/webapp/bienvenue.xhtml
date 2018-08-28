@@ -22,41 +22,28 @@
                     <p:cache region="testcache" key="menu">                   
                         <p:menubar>
                             <p:submenu label="MENU">
-                            <p:menuitem value="#{bundle.ItemAccueil}" url="#{bundle.LinkAccueil}"/>
-                            <p:menuitem value="#{bundle.ItemFamille}" url="#{bundle.LinkFamille}"/>
-                            <p:menuitem value="#{bundle.ItemArticle}" url="#{bundle.LinkArticle}"/>
-                            <p:menuitem value="#{bundle.ItemLivraison}" url="#{bundle.LinkLivraison}"/>
-                            <p:menuitem value="#{bundle.ItemBonsortie}" url="#{bundle.LinkBonsortie}"/>
-                            <p:menuitem value="#{bundle.ItemEntree}" url="#{bundle.LinkEntree}"/>
-                            <p:menuitem value="#{bundle.ItemSortie}" url="#{bundle.LinkSortie}"/>
-                            <p:menuitem value="#{bundle.ItemPoste}" url="#{bundle.LinkPoste}" rendered="#{connexionController.render}"/>
-                            <p:menuitem value="#{bundle.ItemDepartement}" url="#{bundle.LinkDepartement}" rendered="#{connexionController.render}"/>
-                            <p:menuitem value="#{bundle.ItemEmploye}" url="#{bundle.LinkEmploye}" rendered="#{connexionController.render}"/>
-                            <p:menuitem value="#{bundle.ItemPrivilege}" url="#{bundle.LinkPrivilege}" rendered="#{connexionController.render}"/>
-                            <p:menuitem value="#{bundle.ItemUtilisateur}" url="#{bundle.LinkUtilisateur}" rendered="#{connexionController.render}"/>
-                            <p:menuitem value="#{bundle.ItemImporter}" url="#{bundle.LinkImporter}"/>
-                            <p:menuitem value="#{bundle.ItemCompte}" url="#{bundle.LinkCompte}"/>
-                            <p:menuitem value="#{bundle.ItemDeconnexion}" url="#{bundle.LinkDeconnexion}"/>
-                        </p:submenu>
+                                <p:menuitem value="#{bundle.ItemAccueil}" url="#{bundle.LinkAccueil}"/>
+                                <p:menuitem value="#{bundle.ItemFamille}" url="#{bundle.LinkFamille}"/>
+                                <p:menuitem value="#{bundle.ItemArticle}" url="#{bundle.LinkArticle}"/>
+                                <p:menuitem value="#{bundle.ItemLivraison}" url="#{bundle.LinkLivraison}"/>
+                                <p:menuitem value="#{bundle.ItemBonsortie}" url="#{bundle.LinkBonsortie}"/>
+                                <p:menuitem value="#{bundle.ItemEntree}" url="#{bundle.LinkEntree}"/>
+                                <p:menuitem value="#{bundle.ItemSortie}" url="#{bundle.LinkSortie}"/>
+                                <p:menuitem value="#{bundle.ItemPoste}" url="#{bundle.LinkPoste}" rendered="#{connexionController.render}"/>
+                                <p:menuitem value="#{bundle.ItemDepartement}" url="#{bundle.LinkDepartement}" rendered="#{connexionController.render}"/>
+                                <p:menuitem value="#{bundle.ItemEmploye}" url="#{bundle.LinkEmploye}" rendered="#{connexionController.render}"/>
+                                <p:menuitem value="#{bundle.ItemPrivilege}" url="#{bundle.LinkPrivilege}" rendered="#{connexionController.render}"/>
+                                <p:menuitem value="#{bundle.ItemUtilisateur}" url="#{bundle.LinkUtilisateur}" rendered="#{connexionController.render}"/>
+                                <p:menuitem value="#{bundle.ItemImporter}" url="#{bundle.LinkImporter}"/>
+                                <p:menuitem value="#{bundle.ItemCompte}" url="#{bundle.LinkCompte}"/>
+                                <p:menuitem value="#{bundle.ItemDeconnexion}" url="#{bundle.LinkDeconnexion}"/>
+                            </p:submenu>
                             <p:submenu label="AIDE">
-                            <p:menuitem value="#{bundle.ItemManuel}" url="#{bundle.LinkManuel}"/>
-                            <p:menuitem value="#{bundle.ItemRaccourcies}" url="#{bundle.LinkRaccourcies}"/>
-                            <p:menuitem value="#{bundle.ItemUpdates}" url="#{bundle.LinkUpdates}"/>
-                            <p:menuitem value="#{bundle.ItemApropos}" url="#{bundle.LinkApropos}"/>
-                        </p:submenu> 
-                            <f:facet name="options">
-                            <p:themeSwitcher id="advanced" style="width:165px" effect="fade" var="t" value="#{connexionController.theme}">
-                                <f:selectItem itemLabel="#{bundle.ThemeSwitcherItemLabel}" itemValue="#{null}" />
-                                <f:selectItems value="#{connexionController.themes}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}"/>
-                                <p:ajax listener="#{connexionController.changeTheme()}"/>
-                                <p:column>
-                                    <h:outputText styleClass="ui-theme ui-theme-#{t.name}"/>
-                                </p:column>
-                                <p:column>
-                                    #{t.displayName}
-                                </p:column>
-                            </p:themeSwitcher>
-                        </f:facet>  
+                                <p:menuitem value="#{bundle.ItemManuel}" url="#{bundle.LinkManuel}"/>
+                                <p:menuitem value="#{bundle.ItemRaccourcies}" url="#{bundle.LinkRaccourcies}"/>
+                                <p:menuitem value="#{bundle.ItemUpdates}" url="#{bundle.LinkUpdates}"/>
+                                <p:menuitem value="#{bundle.ItemApropos}" url="#{bundle.LinkApropos}"/>
+                            </p:submenu> 
                         </p:menubar>
                     </p:cache> 
                 </h:form>

@@ -20,6 +20,19 @@
                 <h:form id="AccountForm">
                     <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}"   update=":AccountViewForm"   oncomplete="PF('AccountViewDialog').show()"/>
                     <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.PasswordChangeButton}"   update=":PasswordEditForm"   oncomplete="PF('PasswordEditDialog').show()"/>
+                    <br/><br/><br/><br/><b>
+                    <p:outputLabel for="advanced" value="CHOISIR UN THEME" style="vertical-align: sub; font-size: large"/></b>
+                    <p:themeSwitcher id="advanced" style="width:165px" effect="fade" var="t" value="#{connexionController.theme}">
+                        <f:selectItem itemLabel="#{bundle.ThemeSwitcherItemLabel}" itemValue="#{null}" />
+                        <f:selectItems value="#{connexionController.themes}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme}"/>
+                        <p:ajax listener="#{connexionController.changeTheme()}"/>
+                        <p:column>
+                            <h:outputText styleClass="ui-theme ui-theme-#{t.name}"/>
+                        </p:column>
+                        <p:column>
+                            #{t.displayName}
+                        </p:column>
+                    </p:themeSwitcher>
                 </h:form>
             </p:panel>
             <ui:include src="ViewAccount.xhtml"/>
